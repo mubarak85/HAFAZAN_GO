@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ms" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permainan Hafazan Al-Quran</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts untuk Tulisan Arab -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .arabic-text { font-family: 'Amiri', serif; font-size: 1.8rem; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-teal-600 text-white p-4 shadow-md text-center">
+        <h1 class="text-xl font-bold tracking-wide">🎮 Jom Hafaz!</h1>
+        <p class="text-xs opacity-90">Permainan Susun Potongan Ayat</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-md w-full mx-auto p-4 flex-grow flex flex-col justify-center gap-6">
+        
+        <!-- Score & Info -->
+        <div class="flex justify-between items-center bg-white p-3 rounded-xl shadow-xs border border-slate-100">
+            <div>
+                <span class="text-xs text-slate-400 block font-semibold">SURAH</span>
+                <span id="surah-title" class="font-bold text-teal-700">-</span>
+            </div>
+            <div class="text-right">
+                <span class="text-xs text-slate-400 block font-semibold">SKOR</span>
+                <span id="score" class="font-bold text-slate-700 text-lg">0</span>
+            </div>
+        </div>
+
+        <!-- Kawasan Paparan Ayat Sebenar (Guna Flex-row-reverse untuk Arab) -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 min-h-[120px] flex flex-col justify-center items-center">
+            <span class="text-xs text-slate-400 mb-2 block font-semibold self-start">Kawasan Jawapan:</span>
+            <div id="answer-zone" class="flex flex-row-reverse flex-wrap gap-2 justify-center items-center w-full min-h-[50px] p-2 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                <!-- Potongan ayat yang dipilih akan masuk sini -->
+            </div>
+        </div>
+
+        <!-- Kawasan Pilihan Potongan Ayat (Rawak) -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+            <span class="text-xs text-slate-400 mb-3 block font-semibold">Pilih & Susun Ikut Urutan:</span>
+            <div id="options-zone" class="flex flex-row-reverse flex-wrap gap-2 justify-center">
+                <!-- Butang pilihan perkataan akan dijanakan oleh JS -->
+            </div>
+        </div>
+
+        <!-- Butang Kawalan -->
+        <div class="flex gap-2">
+            <button id="btn-reset" class="flex-1 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition active:scale-95">
+                Padam Jawapan
+            </button>
+            <button id="btn-check" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition shadow-md shadow-teal-100 active:scale-95">
+                Semak Jawapan
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="p-3 text-center text-xs text-slate-400">
+        &copy; 2026 Aplikasi Hafazan Game. Hosted on GitHub Pages.
+    </footer>
+
+    <!-- Mesej Berjaya / Gagal Modals -->
+    <div id="result-modal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden justify-center items-center p-4">
+        <div class="bg-white p-6 rounded-2xl max-w-xs w-full text-center shadow-xl transform scale-95 transition-all">
+            <div id="modal-icon" class="text-5xl mb-2">🎉</div>
+            <h3 id="modal-title" class="text-xl font-bold mb-2">Tahniah!</h3>
+            <p id="modal-desc" class="text-sm text-slate-500 mb-4">Susunan anda tepat dan betul.</p>
+            <button id="btn-next" class="w-full py-3 bg-teal-600 text-white font-bold rounded-xl shadow-md hover:bg-teal-700">
+                Ayat Seterusnya
+            </button>
+        </div>
+    </div>
+
+    <!-- JS Link -->
+    <script src="script.js"></script>
+</body>
+</html>
