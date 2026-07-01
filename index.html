@@ -490,7 +490,7 @@
                 if (data.result === "success" && data.logs.length > 0) {
                     data.logs.forEach(log => {
                         let namaSurahPendek = log.surah.split(". ")[1] || log.surah;
-                        let tarikhAsal = log.tarikh.split(" ")[0] || log.tarikh; 
+                        let tarikhAsal = String(log.tarikh || "").split(" ")[0] || "-";
 
                         let tr = document.createElement("tr");
                         tr.innerHTML = `
