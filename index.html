@@ -21,7 +21,7 @@
 
     <div class="w-full max-w-md mx-auto bg-white min-h-screen shadow-xl flex flex-col justify-between relative pb-8">
         
-        <!-- SECTION 1: LOG MASUK (Sama Tepat Gambar 122355) -->
+        <!-- LOG MASUK SCREEN -->
         <div id="login-screen" class="p-6 flex flex-col justify-center items-center flex-grow">
             <div class="w-20 h-20 bg-[#d1fae5] rounded-2xl flex items-center justify-center mb-4 text-[#047857] text-3xl shadow-inner">
                 <i class="fa-solid fa-book-quran"></i>
@@ -50,17 +50,17 @@
             </div>
         </div>
 
-        <!-- SECTION 2: UTAMA (Sama Tepat Gambar 121856) -->
+        <!-- UTAMA SCREEN (100% Menepati Gambar 124041) -->
         <div id="main-screen" class="hidden flex flex-col flex-grow">
             <!-- Header Profil -->
             <div class="bg-gradient-to-br from-[#028261] to-[#01684d] p-6 text-white rounded-b-[2rem] shadow-md relative">
                 <div class="flex items-center justify-between mt-2">
                     <div>
                         <span class="text-[11px] font-semibold text-emerald-100/80 uppercase tracking-widest block mb-0.5">SELAMAT KEMBALI</span>
-                        <h2 id="user-nama" class="text-2xl font-bold tracking-wide uppercase">-</h2>
-                        <p id="user-kelas" class="text-xs text-emerald-100/90 mt-0.5 font-medium">Kelas: -</p>
+                        <h2 id="user-nama" class="text-xl font-bold tracking-wide uppercase leading-tight">-</h2>
+                        <p id="user-kelas" class="text-xs text-emerald-100/90 mt-1 font-medium">Kelas: -</p>
                     </div>
-                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl text-white">
+                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl text-white shrink-0">
                         <i class="fa-solid fa-user-graduate"></i>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
             </div>
         </div>
 
-        <!-- MODAL POPUP LAPORAN (Ditambah Maklumat Surah/Juzuk) -->
+        <!-- MODAL POPUP LAPORAN (Menampilkan Surah, Juzuk & Muka Surat) -->
         <div id="report-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
             <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden transform transition-all flex flex-col max-h-[85vh]">
                 
@@ -150,7 +150,7 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                    <th class="pb-2 font-semibold">Fasa & Surah</th>
+                                    <th class="pb-2 font-semibold">Fasa & Kedudukan Bacaan</th>
                                     <th class="pb-2 font-semibold text-center">Mata</th>
                                     <th class="pb-2 font-semibold text-right">Tarikh</th>
                                 </tr>
@@ -179,8 +179,8 @@
     </div>
 
     <script>
-        // PASTIKAN ANDA MENGGANTIKAN URL DI BAWAH DENGAN URL DEPLOY TERBARU ANDA
-        const API_URL = "https://script.google.com/macros/s/AKfycbzazTGVLxcmUIyMqXC5zzHUyoCvkAHTThTiYSOXVjOY8qWdzcXkkA0aUfsbzyHTEGGMtg/exec";
+        // MASUKKAN URL WEB APP DEPLOY AKTIF ANDA DI SINI
+        const API_URL = "https://script.google.com/macros/s/AKfycbw80K0gSeCjDMqmbFrt_FS2kIXylLjZAX5RTkGVbciDBzJZwZrw2SsSps0a1Ku-qqR7YQ/exec";
         let pelajarSemasa = null;
 
         async function prosesLogin() {
@@ -205,7 +205,7 @@
                 const data = await response.json();
 
                 if (data.result === "success") {
-                    pelajarSemasa = data.pelajar;
+                    pelajarSemasa = data.pelajar; // Memegang data id, nama, kelas, surah, juzuk, m/s
                     document.getElementById("user-nama").textContent = pelajarSemasa.nama;
                     document.getElementById("user-kelas").textContent = "Kelas: " + pelajarSemasa.kelas;
                     document.getElementById("login-screen").classList.add("hidden");
@@ -231,7 +231,14 @@
         async function hantarFasa(namaFasa, nilaiMata) {
             if (!pelajarSemasa) return;
 
-            if (!confirm(`Sahkan penghantaran untuk ${namaFasa}?`)) return;
+            // Membina mesej pengesahan paparan maklumat auto dari Sheets
+            const infoSahkan = `Sahkan penghantaran untuk ${namaFasa}?\n\n` +
+                               `Auto Maklumat Semasa:\n` +
+                               `• Surah: ${pelajarSemasa.surah}\n` +
+                               `• Juzuk: ${pelajarSemasa.juzuk}\n` +
+                               `• Muka Surat: ${pelajarSemasa.mukaSurat}`;
+
+            if (!confirm(infoSahkan)) return;
 
             let targetBtnId = "";
             let originalText = "";
@@ -251,16 +258,16 @@
                         id: pelajarSemasa.id,
                         nama: pelajarSemasa.nama,
                         fasa: namaFasa,
-                        juzuk: "Umum",       // Boleh ditukar jika perlu input spesifik
-                        surah: "Umum",       // Dihantar sebagai string agar dikesan oleh Sheets
-                        mukaSurat: "Umum",   
+                        juzuk: pelajarSemasa.juzuk,       // Auto dihantar dari maklumat pelajar
+                        surah: pelajarSemasa.surah,       // Auto dihantar dari maklumat pelajar
+                        mukaSurat: pelajarSemasa.mukaSurat, // Auto dihantar dari maklumat pelajar
                         mata: nilaiMata
                     })
                 });
                 const data = await response.json();
 
                 if (data.result === "success") {
-                    alert(`Rekod ${namaFasa} berjaya disimpan!`);
+                    alert(`Rekod ${namaFasa} berjaya disimpan secara automatik!`);
                 } else {
                     alert("Gagal disimpan: " + data.message);
                 }
@@ -302,7 +309,11 @@
                         tr.innerHTML = `
                             <td class="py-3 pr-2">
                                 <span class="font-bold text-slate-900 block text-xs uppercase">${log.fasa || "-"}</span>
-                                <span class="text-[10px] text-slate-400 block mt-0.5">Surah: ${log.surah || "-"} | Jz: ${log.juzuk || "-"}</span>
+                                <span class="text-[10px] text-emerald-700 font-medium block mt-0.5">
+                                    Surah: <span class="text-slate-600">${log.surah || "-"}</span> | 
+                                    Jz: <span class="text-slate-600">${log.juzuk || "-"}</span> | 
+                                    M/S: <span class="text-slate-600">${log.mukaSurat || "-"}</span>
+                                </span>
                             </td>
                             <td class="py-3 text-center text-emerald-600 font-bold text-xs">+${log.mata || 0}</td>
                             <td class="py-3 text-right text-slate-400 font-medium text-[10px]">${tarikhPintas || "-"}</td>
