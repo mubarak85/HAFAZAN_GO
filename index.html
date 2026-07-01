@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Hafazan Al-Quran</title>
     <style>
-        /* ==========================================
-           REKA BENTUK CSS (GAYA MODEN MOBILE-FIRST)
-           ========================================== */
         :root {
             --primary: #0284c7;
             --primary-dark: #0369a1;
@@ -42,132 +39,65 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         }
 
-        .app-logo {
-            font-size: 40px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            text-align: center;
-            margin: 0 0 8px 0;
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        p {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-top: 0;
-            margin-bottom: 24px;
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            font-size: 15px;
-            background-color: #f8fafc;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
+        .app-logo { font-size: 40px; text-align: center; margin-bottom: 10px; }
+        h2 { text-align: center; margin: 0 0 8px 0; font-size: 24px; font-weight: 700; }
+        p { text-align: center; color: var(--text-muted); font-size: 14px; margin-top: 0; margin-bottom: 24px; }
+        .input-group { margin-bottom: 16px; }
+        input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 15px; background-color: #f8fafc; box-sizing: border-box; }
+        
+        button { width: 100%; padding: 14px; background-color: var(--primary); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         button:hover { background-color: var(--primary-dark); }
         .d-none { display: none !important; }
 
-        .header-user {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        .header-user { display: flex; justify-content: space-between; align-items: center; }
         .welcome-text { font-size: 13px; color: var(--text-muted); }
         .header-user h3 { margin: 2px 0 0 0; font-size: 18px; }
 
-        .score-badge {
-            background-color: #fef3c7;
-            color: #d97706;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .divider {
-            border: 0;
-            height: 1px;
-            background: #e2e8f0;
-            margin: 20px 0;
-        }
-
+        .score-badge { background-color: #fef3c7; color: #d97706; padding: 8px 16px; border-radius: 30px; font-weight: 700; font-size: 14px; }
+        .divider { border: 0; height: 1px; background: #e2e8f0; margin: 20px 0; }
         .row-select { display: flex; gap: 12px; }
         .col { flex: 1; }
-        .col label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-muted);
-        }
+        .col label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-muted); }
 
-        .status-banner {
-            background-color: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #1e40af;
-            padding: 12px;
-            border-radius: 12px;
-            margin-top: 15px;
-            font-size: 13px;
-            text-align: center;
-        }
-
+        .status-banner { background-color: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px; border-radius: 12px; margin-top: 15px; font-size: 13px; text-align: center; }
         .game-steps { margin-top: 24px; }
-        .step-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 16px;
-        }
-
+        .step-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 16px; margin-bottom: 16px; }
+        
         .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-        .step-num {
-            background: var(--secondary);
-            color: #fff;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
+        .step-num { background: var(--secondary); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold; }
         .step-card h5 { margin: 0; font-size: 14px; }
         .step-card p { text-align: left; margin-bottom: 12px; font-size: 13px; }
         .step-card button { padding: 10px; font-size: 14px; background-color: var(--success); }
-        .btn-logout { background-color: #f1f5f9; color: #64748b; margin-top: 10px; }
+        
+        .btn-report { background-color: #e0f2fe; color: #0369a1; margin-top: 15px; margin-bottom: 5px; }
+        .btn-report:hover { background-color: #bae6fd; }
+        .btn-logout { background-color: #f1f5f9; color: #64748b; margin-top: 5px; }
         .btn-logout:hover { background-color: #e2e8f0; }
         .error { color: #ef4444; font-size: 13px; text-align: center; margin-top: 12px; }
+
+        /* MODAL REPORT STYLING */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 440px; max-height: 80vh; overflow-y: auto; box-sizing: border-box; }
+        .modal h4 { margin-top: 0; font-size: 20px; text-align: center; margin-bottom: 5px; }
+        .report-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        .report-table th, .report-table td { border-bottom: 1px solid #e2e8f0; padding: 12px 8px; text-align: left; }
+        .report-table th { background-color: #f8fafc; color: var(--text-muted); font-weight: 600; }
+        
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-print { background-color: #059669; }
+        .btn-print:hover { background-color: #047857; }
+        .close-modal { background: #ef4444; }
+        .close-modal:hover { background: #dc2626; }
+
+        /* KOD KHAS UNTUK CETAKAN & PDF */
+        @media print {
+            body { background: white; color: black; display: block; }
+            .container, .modal-actions, .close-modal, .btn-print, #loading-report { display: none !important; }
+            .modal { position: relative; background: none; display: block; width: 100%; height: auto; }
+            .modal-content { box-shadow: none; padding: 0; max-height: none; overflow: visible; width: 100%; max-width: 100%; }
+            .report-table th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .modal h4 { font-size: 24px; margin-bottom: 20px; text-align: left; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -244,15 +174,39 @@
                 </div>
             </div>
 
+            <button class="btn-report" onclick="bukaLaporan()">📊 Lihat Laporan Individu</button>
             <button class="btn-logout" onclick="logKeluar()">Log Keluar</button>
         </div>
     </div>
 
-    <!-- ==========================================
-        LOGIK JAVASCRIPT (SISTEM HUBUNGAN GOOGLE)
-        ========================================== -->
+    <!-- 3. MODAL POPUP LAPORAN INDIVIDU -->
+    <div id="report-modal" class="modal d-none">
+        <div class="modal-content">
+            <h4 id="report-title">Laporan Hafazan</h4>
+            <div style="text-align: center; font-size: 14px; color: var(--text-muted);" id="loading-report" class="d-none">Memuat turun log sejarah...</div>
+            <table class="report-table" id="table-log">
+                <thead>
+                    <tr>
+                        <th>Surah/MS</th>
+                        <th>Fasa</th>
+                        <th>Mata</th>
+                        <th>Tarikh</th>
+                    </tr>
+                </thead>
+                <tbody id="report-body">
+                    <!-- Data dimasukkan secara dinamik melalui JS -->
+                </tbody>
+            </table>
+            
+            <div class="modal-actions">
+                <button class="btn-print" onclick="cetakLaporan()">🖨️ Cetak / Save PDF</button>
+                <button class="close-modal" onclick="tutupLaporan()">Tutup</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ⚠️ AMAT PENTING: Ganti URL di bawah dengan URL Web App Google Sheets anda (jika bertukar)
+        // ⚠️ SAMBUNGAN UTAMA API (Sila kemas kini jika URL Apps Script anda bertukar)
         const API_URL = "https://script.google.com/macros/s/AKfycbzvB0Rf15rY3PvHxGWRtSrCdMQhmOyRF6JoJXP2TKp7AjSXp8hZahC4K8KaYZOKaxVC3A/exec"; 
 
         let pelajarSemasa = null;
@@ -279,7 +233,6 @@
             "109. Al-Kafirun", "110. An-Nasr", "111. Al-Masad", "112. Al-Ikhlas", "113. Al-Falaq", "114. An-Nas"
         ];
 
-        // Jana Dropdown Juzuk
         const selectJuzuk = document.getElementById("pilih-juzuk");
         for (let i = 1; i <= 30; i++) {
             let opt = document.createElement("option");
@@ -287,7 +240,6 @@
             selectJuzuk.appendChild(opt);
         }
 
-        // Jana Dropdown Surah
         const selectSurah = document.getElementById("pilih-surah");
         senaraiSurah.forEach(surah => {
             let opt = document.createElement("option");
@@ -295,9 +247,6 @@
             selectSurah.appendChild(opt);
         });
 
-        // ---------------------------------------------------------------
-        // FORMULA AUTO DETECT MUKA SURAT TO JUZUK & SURAH
-        // ---------------------------------------------------------------
         function dapatkanJuzukDanSurah(noMS) {
             const ms = parseInt(noMS);
             if (isNaN(ms) || ms < 1 || ms > 604) return null;
@@ -401,7 +350,7 @@
             else if (ms >= 560 && ms <= 561) surah = "63. Al-Munafiqun";
             else if (ms >= 562 && ms <= 563) surah = "64. At-Taghabun";
             else if (ms >= 564 && ms <= 564) surah = "65. At-Talaq";
-            else if (ms >= 565 && ms <= 566) surah = "66. At-Tahrim";
+            else if (ms >= 565 && ms <= 566) suracht = "66. At-Tahrim";
             else if (ms >= 567 && ms <= 571) surah = "67. Al-Mulk";
             else if (ms >= 572 && ms <= 574) surah = "68. Al-Qalam";
             else if (ms >= 575 && ms <= 576) surah = "69. Al-Haqqah";
@@ -427,7 +376,6 @@
             else if (ms >= 603 && ms <= 604) surah = "89. Al-Fajr";
             else if (ms >= 604) surah = "114. An-Nas";
 
-            // Overwrite khusus untuk muka surat pendek di Juz 30 yang berkongsi halaman
             if (ms === 592) surah = "78. An-Naba'";
             if (ms === 594) surah = "79. An-Nazi'at";
             if (ms === 598) surah = "83. Al-Mutaffifin";
@@ -450,9 +398,6 @@
             }
         }
 
-        // ---------------------------------------------------------------
-        // PROSES LOG MASUK (HUBUNGI APPS SCRIPT)
-        // ---------------------------------------------------------------
         async function logMasuk() {
             const idInput = document.getElementById("username").value.trim();
             const passwordInput = document.getElementById("password").value.trim();
@@ -471,39 +416,24 @@
             try {
                 const response = await fetch(API_URL, {
                     method: "POST",
-                    body: JSON.stringify({
-                        action: "login",
-                        id: idInput,
-                        password: passwordInput
-                    })
+                    body: JSON.stringify({ action: "login", id: idInput, password: passwordInput })
                 });
-                
                 const data = await response.json();
                 
                 if (data.result === "success") {
-                    pelajarSemasa = {
-                        id: idInput,
-                        nama: data.nama,
-                        mata: parseInt(data.mata) || 0
-                    };
-
+                    pelajarSemasa = { id: idInput, nama: data.nama, mata: parseInt(data.mata) || 0 };
                     document.getElementById("login-box").classList.add("d-none");
                     document.getElementById("dashboard-box").classList.remove("d-none");
-                    
                     document.getElementById("nama-pelajar").textContent = pelajarSemasa.nama;
                     document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
-                    
-                    // Set default ke Muka Surat 1 sewaktu mula masuk
                     document.getElementById("pilih-ms").value = "1";
                     autoTukarJuzukSurah();
-                    
                     kemaskiniTeksStatus("Juzuk 1", "1. Al-Fatihah", "1", "Mula Sesi");
                 } else {
                     errorTeks.textContent = data.message;
                 }
             } catch (error) {
-                console.error("Ralat sambungan:", error);
-                errorTeks.textContent = "Gagal masuk. Sila semak sambungan internet/URL API.";
+                errorTeks.textContent = "Gagal masuk. Semak sambungan API.";
             } finally {
                 btnLogin.textContent = "Masuk Permainan";
                 btnLogin.disabled = false;
@@ -511,34 +441,24 @@
         }
 
         function kemaskiniTeksStatus(juzuk, surah, ms, fasa) {
-            document.getElementById("status-terakhir").textContent = 
-                `${juzuk} | ${surah} | Muka Surat ${ms} (${fasa})`;
+            document.getElementById("status-terakhir").textContent = `${juzuk} | ${surah} | Muka Surat ${ms} (${fasa})`;
         }
 
-        // ---------------------------------------------------------------
-        // PROSES SIMPAN REKOD HAFAZAN (APPEND LOG)
-        // ---------------------------------------------------------------
         function selesaiFasa(fasaNama, mataGanjaran) {
             if (!pelajarSemasa) return;
-            
             const jDipilih = document.getElementById("pilih-juzuk").value;
             const sDipilih = document.getElementById("pilih-surah").value;
             const mDipilih = document.getElementById("pilih-ms").value;
             
-            alert(`Alhamdulillah! +${mataGanjaran} Mata berjaya dihantar ke log.`);
+            alert(`Alhamdulillah! +${mataGanjaran} Mata dihantar ke log.`);
 
             fetch(API_URL, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
-                    action: "log",
-                    id: pelajarSemasa.id, 
-                    mata: mataGanjaran, 
-                    juzuk: jDipilih, 
-                    surah: sDipilih, 
-                    mukaSurat: mDipilih, 
-                    fasa: fasaNama 
+                    action: "log", id: pelajarSemasa.id, mata: mataGanjaran, 
+                    juzuk: jDipilih, surah: sDipilih, mukaSurat: mDipilih, fasa: fasaNama 
                 })
             })
             .then(() => {
@@ -546,7 +466,57 @@
                 document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
                 kemaskiniTeksStatus(jDipilih, sDipilih, mDipilih, fasaNama);
             })
-            .catch(err => console.error("Ralat menyimpan rekod:", err));
+            .catch(err => console.error(err));
+        }
+
+        async function bukaLaporan() {
+            if (!pelajarSemasa) return;
+
+            document.getElementById("report-modal").classList.remove("d-none");
+            document.getElementById("report-title").textContent = "Laporan Rekod Hafazan: " + pelajarSemasa.nama;
+            document.getElementById("loading-report").classList.remove("d-none");
+            
+            const tbody = document.getElementById("report-body");
+            tbody.innerHTML = ""; 
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "get_logs", id: pelajarSemasa.id })
+                });
+                const data = await res.json();
+                document.getElementById("loading-report").classList.add("d-none");
+
+                if (data.result === "success" && data.logs.length > 0) {
+                    data.logs.forEach(log => {
+                        let namaSurahPendek = log.surah.split(". ")[1] || log.surah;
+                        let tarikhAsal = log.tarikh.split(" ")[0] || log.tarikh; 
+
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td><strong>${namaSurahPendek}</strong><br><span style="color:#64748b; font-size:10px;">MS ${log.mukaSurat}</span></td>
+                            <td>${log.fasa}</td>
+                            <td style="color:#10b981; font-weight:bold;">+${log.mata}</td>
+                            <td style="color:#64748b; font-size:11px;">${tarikhAsal}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b;">Belum ada sejarah log hafazan.</td></tr>`;
+                }
+            } catch (err) {
+                document.getElementById("loading-report").classList.add("d-none");
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#ef4444;">Gagal mengambil data log.</td></tr>`;
+            }
+        }
+
+        function tutupLaporan() {
+            document.getElementById("report-modal").classList.add("d-none");
+        }
+
+        // FUNGSI BARU JALANKAN WINDOW PRINT
+        function cetakLaporan() {
+            window.print();
         }
 
         function logKeluar() {
