@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <!-- =================== SKRIN UTAMA (DENGAN INPUT) =================== -->
+        <!-- =================== SKRIN UTAMA =================== -->
         <div id="main-screen" class="hidden flex flex-col flex-grow">
             <!-- Header Profil -->
             <div class="bg-gradient-to-br from-[#028261] to-[#01684d] p-6 text-white rounded-b-[2rem] shadow-md relative">
@@ -66,32 +66,31 @@
                 </div>
             </div>
 
-            <!-- BAHAGIAN AUTO DATA & INPUT MUKA SURAT -->
+            <!-- RUANG TULIS MUKA SURAT & DETECT AUTO JUZUK/SURAH -->
             <div class="px-5 pt-5">
-                <div class="bg-emerald-50/60 border border-emerald-100/80 p-4 rounded-2xl space-y-3">
-                    <div class="flex justify-between items-center text-xs pb-2 border-b border-emerald-100">
-                        <span class="font-bold text-emerald-800 uppercase tracking-wide flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-info text-emerald-600"></i> Maklumat Al-Quran Semasa
-                        </span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 text-xs">
-                        <div>
-                            <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[10px]">AUTO JUZUK</span>
-                            <span id="auto-juzuk" class="text-sm font-bold text-slate-800 block mt-0.5">-</span>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[10px]">AUTO SURAH</span>
-                            <span id="auto-surah" class="text-sm font-bold text-slate-800 block mt-0.5">-</span>
-                        </div>
-                    </div>
+                <div class="bg-emerald-50/60 border border-emerald-100/80 p-5 rounded-2xl space-y-4 shadow-sm">
                     <div>
-                        <label class="block text-slate-500 font-bold uppercase tracking-wider text-[10px] mb-1.5">MASUKKAN NO. MUKA SURAT BACAAN</label>
+                        <label class="block text-slate-600 font-bold uppercase tracking-wider text-[11px] mb-2 flex items-center gap-1">
+                            <i class="fa-solid fa-pen-to-square text-[#028261]"></i> Tulis Muka Surat Di Sini:
+                        </label>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
-                                <i class="fa-solid fa-file-lines"></i>
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-bold text-sm">
+                                M/S
                             </span>
-                            <input type="number" id="input-muka-surat" placeholder="Contoh: 142" 
-                                class="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#028261] font-semibold text-sm transition-all">
+                            <input type="number" id="input-muka-surat" min="1" max="604" placeholder="Contoh: 1 - 604" oninput="autoKesanQuran()"
+                                class="w-full pl-14 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#028261] font-bold text-base transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Kad Paparan Auto Detect -->
+                    <div class="grid grid-cols-2 gap-3 bg-white p-3.5 rounded-xl border border-emerald-100/50 shadow-inner">
+                        <div>
+                            <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[9px]">AUTO JUZUK</span>
+                            <span id="auto-juzuk" class="text-sm font-extrabold text-slate-800 block mt-0.5">-</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[9px]">AUTO SURAH</span>
+                            <span id="auto-surah" class="text-sm font-extrabold text-[#028261] block mt-0.5 truncate">-</span>
                         </div>
                     </div>
                 </div>
@@ -100,7 +99,7 @@
             <!-- Senarai Kad Fasa -->
             <div class="p-5 space-y-4 flex-grow">
                 
-                <!-- FASA 1: TALAQQI -->
+                <!-- FASA 1 -->
                 <div class="bg-[#f8fafc] border border-slate-100 p-5 rounded-2xl shadow-sm space-y-4">
                     <div class="flex items-start gap-3.5">
                         <div class="w-6 h-6 bg-[#028261] text-white font-bold rounded-md flex items-center justify-center text-xs shrink-0 mt-0.5">1</div>
@@ -115,7 +114,7 @@
                     </button>
                 </div>
 
-                <!-- FASA 2: HAFAZAN -->
+                <!-- FASA 2 -->
                 <div class="bg-[#f8fafc] border border-slate-100 p-5 rounded-2xl shadow-sm space-y-4">
                     <div class="flex items-start gap-3.5">
                         <div class="w-6 h-6 bg-[#028261] text-white font-bold rounded-md flex items-center justify-center text-xs shrink-0 mt-0.5">2</div>
@@ -130,7 +129,7 @@
                     </button>
                 </div>
 
-                <!-- FASA 3: MURAJAAH -->
+                <!-- FASA 3 -->
                 <div class="bg-[#f8fafc] border border-slate-100 p-5 rounded-2xl shadow-sm space-y-4">
                     <div class="flex items-start gap-3.5">
                         <div class="w-6 h-6 bg-[#028261] text-white font-bold rounded-md flex items-center justify-center text-xs shrink-0 mt-0.5">3</div>
@@ -210,19 +209,141 @@
     </div>
 
     <script>
-        // GANTIKAN URL WEB APP AKTIF ANDA DI SINI
-        const API_URL = "https://script.google.com/macros/s/AKfycbw80K0gSeCjDMqmbFrt_FS2kIXylLjZAX5RTkGVbciDBzJZwZrw2SsSps0a1Ku-qqR7YQ/exec";
+        // MASUKKAN URL WEB APP DEPLOY AKTIF ANDA DI SINI
+        const API_URL = "https://script.google.com/macros/s/AKfycbz_n9ixypCahYEWko31IeY5oaqyQeFkjyDYHPIqMyYUIi9j-MmhD9Rt56acu-L0b_g_Sg/exec";
         let pelajarSemasa = null;
+        let jzTerkesan = "-";
+        let surahTerkesan = "-";
 
+        // --- DATABASE DETECT JUZUK & SURAH BERDASARKAN MUKA SURAT ---
+        function autoKesanQuran() {
+            const ms = parseInt(document.getElementById("input-muka-surat").value);
+            const lblJuzuk = document.getElementById("auto-juzuk");
+            const lblSurah = document.getElementById("auto-surah");
+
+            if (!ms || ms < 1 || ms > 604) {
+                lblJuzuk.textContent = "-";
+                lblSurah.textContent = "-";
+                jzTerkesan = "-"; surahTerkesan = "-";
+                return;
+            }
+
+            // 1. Hitung Kedudukan Juzuk Automatik
+            let jz = 1;
+            if (ms >= 2 && ms <= 21) jz = 1;
+            else if (ms >= 602) jz = 30;
+            else jz = Math.floor((ms - 2) / 20) + 1;
+            if (jz > 30) jz = 30;
+            jzTerkesan = jz;
+            lblJuzuk.textContent = "Juzuk " + jz;
+
+            // 2. Hitung Kedudukan Surah Automatik
+            let surah = "Fatihah / Baqarah";
+            if (ms === 1) surah = "Al-Fatihah";
+            else if (ms >= 2 && ms <= 49) surah = "Al-Baqarah";
+            else if (ms >= 50 && ms <= 76) surah = "Ali 'Imran";
+            else if (ms >= 77 && ms <= 105) surah = "An-Nisa'";
+            else if (ms >= 106 && ms <= 127) surah = "Al-Ma'idah";
+            else if (ms >= 128 && ms <= 150) surah = "Al-An'am";
+            else if (ms >= 151 && ms <= 176) surah = "Al-A'raf";
+            else if (ms >= 177 && ms <= 186) surah = "Al-Anfal";
+            else if (ms >= 187 && ms <= 207) surah = "At-Taubah";
+            else if (ms >= 208 && ms <= 220) surah = "Yunus";
+            else if (ms >= 221 && ms <= 234) surah = "Hud";
+            else if (ms >= 235 && ms <= 248) surah = "Yusuf";
+            else if (ms >= 249 && ms <= 254) surah = "Ar-Ra'd";
+            else if (ms >= 255 && ms <= 261) surah = "Ibrahim";
+            else if (ms >= 262 && ms <= 266) surah = "Al-Hijr";
+            else if (ms >= 267 && ms <= 281) surah = "An-Nahl";
+            else if (ms >= 282 && ms <= 292) surah = "Al-Isra'";
+            else if (ms >= 293 && ms <= 304) surah = "Al-Kahf";
+            else if (ms >= 305 && ms <= 311) surah = "Maryam";
+            else if (ms >= 312 && ms <= 321) surah = "Taha";
+            else if (ms >= 322 && ms <= 331) surah = "Al-Anbiya'";
+            else if (ms >= 332 && ms <= 341) surah = "Al-Hajj";
+            else if (ms >= 342 && ms <= 350) surah = "Al-Mu'minun";
+            else if (ms >= 351 && ms <= 359) surah = "An-Nur";
+            else if (ms >= 360 && ms <= 366) surah = "Al-Furqan";
+            else if (ms >= 367 && ms <= 376) surah = "Asy-Syu'ara'";
+            else if (ms >= 377 && ms <= 384) surah = "An-Naml";
+            else if (ms >= 385 && ms <= 395) surah = "Al-Qasas";
+            else if (ms >= 396 && ms <= 403) surah = "Al-Ankabut";
+            else if (ms >= 404 && ms <= 410) surah = "Ar-Rum";
+            else if (ms >= 411 && ms <= 414) surah = "Luqman";
+            else if (ms >= 415 && ms <= 417) surah = "As-Sajdah";
+            else if (ms >= 418 && ms <= 427) surah = "Al-Ahzab";
+            else if (ms >= 428 && ms <= 433) surah = "Saba'";
+            else if (ms >= 434 && ms <= 439) surah = "Fatir";
+            else if (ms >= 440 && ms <= 445) surah = "Yasin";
+            else if (ms >= 446 && ms <= 452) surah = "As-Saffat";
+            else if (ms >= 453 && ms <= 457) surah = "Sad";
+            else if (ms >= 458 && ms <= 466) surah = "Az-Zumar";
+            else if (ms >= 467 && ms <= 476) surah = "Ghafir";
+            else if (ms >= 477 && ms <= 482) surah = "Fussilat";
+            else if (ms >= 483 && ms <= 488) surah = "Asy-Syura";
+            else if (ms >= 489 && ms <= 495) surah = "Az-Zukhruf";
+            else if (ms >= 496 && ms <= 498) surah = "Ad-Dukhan";
+            else if (ms >= 499 && ms <= 501) surah = "Al-Jathiyah";
+            else if (ms >= 502 && ms <= 506) surah = "Al-Ahqaf";
+            else if (ms >= 507 && ms <= 510) surah = "Muhammad";
+            else if (ms >= 511 && ms <= 514) surah = "Al-Fath";
+            else if (ms >= 515 && ms <= 517) surah = "Al-Hujurat";
+            else if (ms >= 518 && ms <= 520) surah = "Qaf";
+            else if (ms >= 521 && ms <= 523) surah = "Adz-Dzariyat";
+            else if (ms >= 524 && ms <= 525) surah = "At-Tur";
+            else if (ms >= 526 && ms <= 528) surah = "An-Najm";
+            else if (ms >= 529 && ms <= 531) surah = "Al-Qamar";
+            else if (ms >= 532 && ms <= 534) surah = "Ar-Rahman";
+            else if (ms >= 535 && ms <= 537) surah = "Al-Waqi'ah";
+            else if (ms >= 538 && ms <= 541) surah = "Al-Hadid";
+            else if (ms >= 542 && ms <= 544) surah = "Al-Mujadilah";
+            else if (ms >= 545 && ms <= 548) surah = "Al-Hasyr";
+            else if (ms >= 549 && ms <= 551) surah = "Al-Mumtahanah";
+            else if (ms >= 552 && ms <= 553) surah = "As-Saff";
+            else if (ms >= 554 && ms <= 555) surah = "Al-Jumu'ah";
+            else if (ms >= 556 && ms <= 557) surah = "Al-Munafiqun";
+            else if (ms >= 558 && ms <= 559) surah = "At-Taghabun";
+            else if (ms >= 560 && ms <= 561) surah = "At-Talaq";
+            else if (ms >= 562 && ms <= 563) surah = "At-Tahrim";
+            else if (ms >= 564 && ms <= 565) surah = "Al-Mulk";
+            else if (ms >= 566 && ms <= 567) surah = "Al-Qalam";
+            else if (ms >= 568 && ms <= 569) surah = "Al-Haqqah";
+            else if (ms >= 570 && ms <= 571) surah = "Al-Ma'arij";
+            else if (ms >= 572 && ms <= 573) surah = "Nuh";
+            else if (ms >= 574 && ms <= 575) surah = "Al-Jinn";
+            else if (ms >= 576 && ms <= 577) surah = "Al-Muzzammil";
+            else if (ms >= 578 && ms <= 579) surah = "Al-Muddaththir";
+            else if (ms >= 580 && ms <= 581) surah = "Al-Qiyamah";
+            else if (ms >= 582 && ms <= 584) surah = "Al-Insan";
+            else if (ms >= 585 && ms <= 586) surah = "Al-Mursalat";
+            else if (ms >= 587 && ms <= 588) surah = "An-Naba'";
+            else if (ms >= 589 && ms <= 590) surah = "An-Nazi'at";
+            else if (ms >= 591 && ms <= 592) surah = "Abasa";
+            else if (ms >= 593) {
+                if(ms == 593) surah = "At-Takwir";
+                else if(ms == 594) surah = "Al-Infitar / Al-Mutaffifin";
+                else if(ms == 595) surah = "Al-Mutaffifin";
+                else if(ms == 596) surah = "Al-Insyiqaq";
+                else if(ms == 597) surah = "Al-Buruj";
+                else if(ms == 598) surah = "At-Tariq / Al-A'la";
+                else if(ms == 599) surah = "Al-A'la / Al-Ghasyiyah";
+                else if(ms == 600) surah = "Al-Fajr";
+                else if(ms == 601) surah = "Al-Balad / Asy-Syams";
+                else if(ms == 602) surah = "Al-Layl / Ad-Duha / Al-Insyirah";
+                else if(ms == 603) surah = "At-Tin / Al-Alaq / Al-Qadr / Al-Bayyinah";
+                else if(ms == 604) surah = "Az-Zalzalah hingga An-Nas";
+            }
+            surahTerkesan = surah;
+            lblSurah.textContent = surah;
+        }
+
+        // --- PROSES LOGIN ---
         async function prosesLogin() {
             const inputId = document.getElementById("input-id").value.trim();
             const errorDiv = document.getElementById("login-error");
             const btnLogin = document.getElementById("btn-login");
 
-            if (!inputId) {
-                paparRalatLogin("Sila masukkan ID anda.");
-                return;
-            }
+            if (!inputId) { paparRalatLogin("Sila masukkan ID anda."); return; }
 
             errorDiv.classList.add("hidden");
             btnLogin.disabled = true;
@@ -237,17 +358,12 @@
 
                 if (data.result === "success") {
                     pelajarSemasa = data.pelajar;
-                    
-                    // Suntik teks data pelajar ke UI
                     document.getElementById("user-nama").textContent = pelajarSemasa.nama;
                     document.getElementById("user-kelas").textContent = "Kelas: " + (pelajarSemasa.kelas || "-");
                     
-                    // Papar maklumat auto surah dan juzuk dari Sheets
-                    document.getElementById("auto-juzuk").textContent = "Juzuk " + (pelajarSemasa.juzuk || "-");
-                    document.getElementById("auto-surah").textContent = pelajarSemasa.surah || "-";
-                    
-                    // Kosongkan semula kotak penulisan muka surat lama
+                    // Reset input muka surat asal
                     document.getElementById("input-muka-surat").value = "";
+                    autoKesanQuran();
 
                     document.getElementById("login-screen").classList.add("hidden");
                     document.getElementById("main-screen").classList.remove("hidden");
@@ -269,27 +385,26 @@
             errorDiv.classList.remove("hidden");
         }
 
+        // --- PROSES HANTAR DATA FASA ---
         async function hantarFasa(namaFasa, nilaiMata) {
             if (!pelajarSemasa) return;
 
             const mSInput = document.getElementById("input-muka-surat").value.trim();
 
-            // Saringan pengesahan pengisian muka surat
-            if (!mSInput) {
-                alert("Sila tulis nombor Muka Surat terlebih dahulu sebelum menyimpan rekod!");
+            if (!mSInput || parseInt(mSInput) < 1 || parseInt(mSInput) > 604) {
+                alert("Sila masukkan nombor Muka Surat yang sah (1-604) terlebih dahulu!");
                 document.getElementById("input-muka-surat").focus();
                 return;
             }
 
             const infoSahkan = `Sahkan penghantaran untuk ${namaFasa}?\n\n` +
-                               `• Surah: ${pelajarSemasa.surah}\n` +
-                               `• Juzuk: ${pelajarSemasa.juzuk}\n` +
-                               `• Muka Surat Baru: ${mSInput}`;
+                               `• Auto Surah: ${surahTerkesan}\n` +
+                               `• Auto Juzuk: ${jzTerkesan}\n` +
+                               `• Muka Surat: ${mSInput}`;
 
             if (!confirm(infoSahkan)) return;
 
-            let targetBtnId = "";
-            let originalText = "";
+            let targetBtnId = ""; let originalText = "";
             if (namaFasa === "FASA TALAQQI") { targetBtnId = "btn-talaqqi"; originalText = "Selesai Talaqqi (+10 Mata)"; }
             else if (namaFasa === "FASA HAFAZAN") { targetBtnId = "btn-hafazan"; originalText = "Selesai Hafazan Baharu (+20 Mata)"; }
             else if (namaFasa === "FASA MURAJAAH") { targetBtnId = "btn-murajaah"; originalText = "Selesai Murajaah / Semakan (+15 Mata)"; }
@@ -306,16 +421,16 @@
                         id: pelajarSemasa.id,
                         nama: pelajarSemasa.nama,
                         fasa: namaFasa,
-                        juzuk: pelajarSemasa.juzuk,       
-                        surah: pelajarSemasa.surah,       
-                        mukaSurat: mSInput, // Menghantar nombor yang ditaip oleh pengguna
+                        juzuk: String(jzTerkesan),       
+                        surah: surahTerkesan,       
+                        mukaSurat: mSInput, 
                         mata: nilaiMata
                     })
                 });
                 const data = await response.json();
 
                 if (data.result === "success") {
-                    alert(`Rekod bagi ${namaFasa} di muka surat ${mSInput} berjaya disimpan!`);
+                    alert(`Rekod ${namaFasa} berjaya disimpan ke Google Sheets!`);
                 } else {
                     alert("Gagal disimpan: " + data.message);
                 }
@@ -328,6 +443,7 @@
             }
         }
 
+        // --- BUKA LAPORAN INDIVIDU ---
         async function bukaLaporan() {
             if (!pelajarSemasa) return;
 
@@ -343,7 +459,6 @@
                     method: "POST",
                     body: JSON.stringify({ action: "get_logs", id: pelajarSemasa.id })
                 });
-                
                 const data = await res.json();
                 document.getElementById("loading-report").classList.add("hidden");
 
