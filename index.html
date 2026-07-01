@@ -203,20 +203,20 @@
             <hr class="divider">
 
             <div class="selection-zone">
+                <div class="row-select" style="margin-bottom: 10px;">
+                    <div class="col">
+                        <label for="pilih-ms">Muka Surat (1 - 604)</label>
+                        <input type="number" id="pilih-ms" min="1" max="604" value="1" oninput="autoTukarJuzukSurah()">
+                    </div>
+                </div>
                 <div class="row-select">
                     <div class="col">
                         <label for="pilih-juzuk">Juzuk</label>
-                        <select id="pilih-juzuk"></select>
+                        <select id="pilih-juzuk" disabled style="background-color: #e2e8f0; cursor: not-allowed;"></select>
                     </div>
                     <div class="col">
                         <label for="pilih-surah">Surah</label>
-                        <select id="pilih-surah"></select>
-                    </div>
-                </div>
-                <div class="row-select" style="margin-top: 10px;">
-                    <div class="col">
-                        <label for="pilih-ms">Muka Surat (1 - 604)</label>
-                        <input type="number" id="pilih-ms" min="1" max="604" value="1">
+                        <select id="pilih-surah" disabled style="background-color: #e2e8f0; cursor: not-allowed;"></select>
                     </div>
                 </div>
             </div>
@@ -252,12 +252,12 @@
         LOGIK JAVASCRIPT (SISTEM HUBUNGAN GOOGLE)
         ========================================== -->
     <script>
-        // ⚠️ PASTIKAN URL INI ADALAH URL WEB APP APPS SCRIPTS TERBARU ANDA
+        // ⚠️ AMAT PENTING: Ganti URL di bawah dengan URL Web App Google Sheets anda (jika bertukar)
         const API_URL = "https://script.google.com/macros/s/AKfycbzvB0Rf15rY3PvHxGWRtSrCdMQhmOyRF6JoJXP2TKp7AjSXp8hZahC4K8KaYZOKaxVC3A/exec"; 
 
         let pelajarSemasa = null;
 
-      const senaraiSurah = [
+        const senaraiSurah = [
             "1. Al-Fatihah", "2. Al-Baqarah", "3. Ali 'Imran", "4. An-Nisa'", "5. Al-Ma'idah", "6. Al-An'am",
             "7. Al-A'raf", "8. Al-Anfal", "9. At-Taubah", "10. Yunus", "11. Hud", "12. Yusuf",
             "13. Ar-Ra'd", "14. Ibrahim", "15. Al-Hijr", "16. An-Nahl", "17. Al-Isra'", "18. Al-Kahf",
@@ -296,6 +296,161 @@
         });
 
         // ---------------------------------------------------------------
+        // FORMULA AUTO DETECT MUKA SURAT TO JUZUK & SURAH
+        // ---------------------------------------------------------------
+        function dapatkanJuzukDanSurah(noMS) {
+            const ms = parseInt(noMS);
+            if (isNaN(ms) || ms < 1 || ms > 604) return null;
+
+            let juzuk = 1;
+            let surah = "1. Al-Fatihah";
+
+            if (ms >= 2 && ms <= 21) juzuk = 1;
+            else if (ms >= 22 && ms <= 41) juzuk = 2;
+            else if (ms >= 42 && ms <= 61) juzuk = 3;
+            else if (ms >= 62 && ms <= 81) juzuk = 4;
+            else if (ms >= 82 && ms <= 101) juzuk = 5;
+            else if (ms >= 102 && ms <= 121) juzuk = 6;
+            else if (ms >= 122 && ms <= 141) juzuk = 7;
+            else if (ms >= 142 && ms <= 161) juzuk = 8;
+            else if (ms >= 162 && ms <= 181) juzuk = 9;
+            else if (ms >= 182 && ms <= 201) juzuk = 10;
+            else if (ms >= 202 && ms <= 221) juzuk = 11;
+            else if (ms >= 222 && ms <= 241) juzuk = 12;
+            else if (ms >= 242 && ms <= 261) juzuk = 13;
+            else if (ms >= 262 && ms <= 281) juzuk = 14;
+            else if (ms >= 282 && ms <= 301) juzuk = 15;
+            else if (ms >= 302 && ms <= 321) juzuk = 16;
+            else if (ms >= 322 && ms <= 341) juzuk = 17;
+            else if (ms >= 342 && ms <= 361) juzuk = 18;
+            else if (ms >= 362 && ms <= 381) juzuk = 19;
+            else if (ms >= 382 && ms <= 401) juzuk = 20;
+            else if (ms >= 402 && ms <= 421) juzuk = 21;
+            else if (ms >= 422 && ms <= 441) juzuk = 22;
+            else if (ms >= 442 && ms <= 461) juzuk = 23;
+            else if (ms >= 462 && ms <= 481) juzuk = 24;
+            else if (ms >= 482 && ms <= 501) juzuk = 25;
+            else if (ms >= 502 && ms <= 521) juzuk = 26;
+            else if (ms >= 522 && ms <= 541) juzuk = 27;
+            else if (ms >= 542 && ms <= 561) juzuk = 28;
+            else if (ms >= 562 && ms <= 581) juzuk = 29;
+            else if (ms >= 582 && ms <= 604) juzuk = 30;
+
+            if (ms === 1) surah = "1. Al-Fatihah";
+            else if (ms >= 2 && ms <= 49) surah = "2. Al-Baqarah";
+            else if (ms >= 50 && ms <= 76) surah = "3. Ali 'Imran";
+            else if (ms >= 77 && ms <= 105) surah = "4. An-Nisa'";
+            else if (ms >= 106 && ms <= 127) surah = "5. Al-Ma'idah";
+            else if (ms >= 128 && ms <= 150) surah = "6. Al-An'am";
+            else if (ms >= 151 && ms <= 176) surah = "7. Al-A'raf";
+            else if (ms >= 177 && ms <= 186) surah = "8. Al-Anfal";
+            else if (ms >= 187 && ms <= 207) surah = "9. At-Taubah";
+            else if (ms >= 208 && ms <= 220) surah = "10. Yunus";
+            else if (ms >= 221 && ms <= 234) surah = "11. Hud";
+            else if (ms >= 235 && ms <= 248) surah = "12. Yusuf";
+            else if (ms >= 249 && ms <= 254) surah = "13. Ar-Ra'd";
+            else if (ms >= 255 && ms <= 261) surah = "14. Ibrahim";
+            else if (ms >= 262 && ms <= 267) surah = "15. Al-Hijr";
+            else if (ms >= 268 && ms <= 281) surah = "16. An-Nahl";
+            else if (ms >= 282 && ms <= 292) surah = "17. Al-Isra'";
+            else if (ms >= 293 && ms <= 304) surah = "18. Al-Kahf";
+            else if (ms >= 305 && ms <= 311) surah = "19. Maryam";
+            else if (ms >= 312 && ms <= 321) surah = "20. Taha";
+            else if (ms >= 322 && ms <= 331) surah = "21. Al-Anbiya'";
+            else if (ms >= 332 && ms <= 341) surah = "22. Al-Hajj";
+            else if (ms >= 342 && ms <= 350) surah = "23. Al-Mu'minun";
+            else if (ms >= 351 && ms <= 359) surah = "24. An-Nur";
+            else if (ms >= 360 && ms <= 366) surah = "25. Al-Furqan";
+            else if (ms >= 367 && ms <= 376) surah = "26. Asy-Syu'ara'";
+            else if (ms >= 377 && ms <= 384) surah = "27. An-Naml";
+            else if (ms >= 385 && ms <= 395) surah = "28. Al-Qasas";
+            else if (ms >= 396 && ms <= 403) surah = "29. Al-'Ankabut";
+            else if (ms >= 404 && ms <= 410) surah = "30. Ar-Rum";
+            else if (ms >= 411 && ms <= 414) surah = "31. Luqman";
+            else if (ms >= 415 && ms <= 417) surah = "32. As-Sajdah";
+            else if (ms >= 418 && ms <= 427) surah = "33. Al-Ahzab";
+            else if (ms >= 428 && ms <= 433) surah = "34. Saba'";
+            else if (ms >= 434 && ms <= 439) surah = "35. Fatir";
+            else if (ms >= 440 && ms <= 445) surah = "36. Yasin";
+            else if (ms >= 446 && ms <= 452) surah = "37. As-Saffat";
+            else if (ms >= 453 && ms <= 457) surah = "38. Sad";
+            else if (ms >= 458 && ms <= 466) surah = "39. Az-Zumar";
+            else if (ms >= 467 && ms <= 476) surah = "40. Ghafir";
+            else if (ms >= 477 && ms <= 482) surah = "41. Fussilat";
+            else if (ms >= 483 && ms <= 488) surah = "42. Asy-Syura";
+            else if (ms >= 489 && ms <= 495) surah = "43. Az-Zukhruf";
+            else if (ms >= 496 && ms <= 498) surah = "44. Ad-Dukhan";
+            else if (ms >= 499 && ms <= 501) surah = "45. Al-Jathiyah";
+            else if (ms >= 502 && ms <= 506) surah = "46. Al-Ahqaf";
+            else if (ms >= 507 && ms <= 510) surah = "47. Muhammad";
+            else if (ms >= 511 && ms <= 515) surah = "48. Al-Fath";
+            else if (ms >= 516 && ms <= 517) surah = "49. Al-Hujurat";
+            else if (ms >= 518 && ms <= 520) surah = "50. Qaf";
+            else if (ms >= 521 && ms <= 525) surah = "51. Adz-Dzariyat";
+            else if (ms >= 526 && ms <= 527) surah = "52. At-Tur";
+            else if (ms >= 528 && ms <= 531) surah = "53. An-Najm";
+            else if (ms >= 532 && ms <= 534) surah = "54. Al-Qamar";
+            else if (ms >= 535 && ms <= 536) surah = "55. Ar-Rahman";
+            else if (ms >= 537 && ms <= 541) surah = "56. Al-Waqi'ah";
+            else if (ms >= 542 && ms <= 548) surah = "57. Al-Hadid";
+            else if (ms >= 549 && ms <= 551) surah = "58. Al-Mujadilah";
+            else if (ms >= 552 && ms <= 553) surah = "59. Al-Hasyr";
+            else if (ms >= 554 && ms <= 555) surah = "60. Al-Mumtahanah";
+            else if (ms >= 556 && ms <= 557) surah = "61. As-Saff";
+            else if (ms >= 558 && ms <= 559) surah = "62. Al-Jumu'ah";
+            else if (ms >= 560 && ms <= 561) surah = "63. Al-Munafiqun";
+            else if (ms >= 562 && ms <= 563) surah = "64. At-Taghabun";
+            else if (ms >= 564 && ms <= 564) surah = "65. At-Talaq";
+            else if (ms >= 565 && ms <= 566) surah = "66. At-Tahrim";
+            else if (ms >= 567 && ms <= 571) surah = "67. Al-Mulk";
+            else if (ms >= 572 && ms <= 574) surah = "68. Al-Qalam";
+            else if (ms >= 575 && ms <= 576) surah = "69. Al-Haqqah";
+            else if (ms >= 577 && ms <= 578) surah = "70. Al-Ma'arij";
+            else if (ms >= 579 && ms <= 580) surah = "71. Nuh";
+            else if (ms >= 581 && ms <= 582) surah = "72. Al-Jinn";
+            else if (ms >= 583 && ms <= 584) surah = "73. Al-Muzzammil";
+            else if (ms >= 585 && ms <= 586) surah = "74. Al-Muddassir";
+            else if (ms >= 587 && ms <= 588) surah = "75. Al-Qiyamah";
+            else if (ms >= 589 && ms <= 589) surah = "76. Al-Insan";
+            else if (ms >= 590 && ms <= 590) surah = "77. Al-Mursalat";
+            else if (ms >= 591 && ms <= 592) surah = "78. An-Naba'";
+            else if (ms >= 593 && ms <= 594) surah = "79. An-Nazi'at";
+            else if (ms >= 595 && ms <= 595) surah = "80. 'Abasa";
+            else if (ms >= 596 && ms <= 596) surah = "81. At-Takwir";
+            else if (ms >= 597 && ms <= 597) surah = "82. Al-Infitar";
+            else if (ms >= 597 && ms <= 599) surah = "83. Al-Mutaffifin";
+            else if (ms >= 599 && ms <= 600) surah = "84. Al-Insyiqaq";
+            else if (ms >= 600 && ms <= 601) surah = "85. Al-Buruj";
+            else if (ms >= 601 && ms <= 602) surah = "86. At-Tariq";
+            else if (ms >= 602 && ms <= 602) surah = "87. Al-A'la";
+            else if (ms >= 603 && ms <= 603) surah = "88. Al-Ghasyiyah";
+            else if (ms >= 603 && ms <= 604) surah = "89. Al-Fajr";
+            else if (ms >= 604) surah = "114. An-Nas";
+
+            // Overwrite khusus untuk muka surat pendek di Juz 30 yang berkongsi halaman
+            if (ms === 592) surah = "78. An-Naba'";
+            if (ms === 594) surah = "79. An-Nazi'at";
+            if (ms === 598) surah = "83. Al-Mutaffifin";
+            if (ms === 600) surah = "84. Al-Insyiqaq";
+            if (ms === 601) surah = "85. Al-Buruj";
+            if (ms === 602) surah = "86. At-Tariq";
+            if (ms === 603) surah = "88. Al-Ghasyiyah";
+            if (ms === 604) surah = "114. An-Nas";
+
+            return { juzuk: "Juzuk " + juzuk, surah: surah };
+        }
+
+        function autoTukarJuzukSurah() {
+            const msInput = document.getElementById("pilih-ms").value;
+            const hasil = dapatkanJuzukDanSurah(msInput);
+
+            if (hasil) {
+                document.getElementById("pilih-juzuk").value = hasil.juzuk;
+                document.getElementById("pilih-surah").value = hasil.surah;
+            }
+        }
+
+        // ---------------------------------------------------------------
         // PROSES LOG MASUK (HUBUNGI APPS SCRIPT)
         // ---------------------------------------------------------------
         async function logMasuk() {
@@ -326,21 +481,23 @@
                 const data = await response.json();
                 
                 if (data.result === "success") {
-                    // Simpan data sesi pelajar
                     pelajarSemasa = {
                         id: idInput,
                         nama: data.nama,
                         mata: parseInt(data.mata) || 0
                     };
 
-                    // Tukar Paparan ke Dashboard
                     document.getElementById("login-box").classList.add("d-none");
                     document.getElementById("dashboard-box").classList.remove("d-none");
                     
                     document.getElementById("nama-pelajar").textContent = pelajarSemasa.nama;
                     document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
                     
-                    kemaskiniTeksStatus("Juzuk 1", "Al-Baqarah", "1", "Mula Sesi");
+                    // Set default ke Muka Surat 1 sewaktu mula masuk
+                    document.getElementById("pilih-ms").value = "1";
+                    autoTukarJuzukSurah();
+                    
+                    kemaskiniTeksStatus("Juzuk 1", "1. Al-Fatihah", "1", "Mula Sesi");
                 } else {
                     errorTeks.textContent = data.message;
                 }
@@ -370,10 +527,9 @@
             
             alert(`Alhamdulillah! +${mataGanjaran} Mata berjaya dihantar ke log.`);
 
-            // Hantar data rekod aktiviti ke server Google Sheets
             fetch(API_URL, {
                 method: "POST",
-                mode: "no-cors", // Memastikan CORS tidak menyekat penghantaran data
+                mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
                     action: "log",
@@ -386,7 +542,6 @@
                 })
             })
             .then(() => {
-                // Kemaskini paparan skrin secara langsung
                 pelajarSemasa.mata += mataGanjaran;
                 document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
                 kemaskiniTeksStatus(jDipilih, sDipilih, mDipilih, fasaNama);
