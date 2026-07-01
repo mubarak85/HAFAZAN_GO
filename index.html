@@ -288,12 +288,32 @@
             .catch(err => console.error("Ralat data:", err));
         }
 
-        function logMasuk() {
-            const idInput = document.getElementById("username").value.trim();
-            const passInput = document.getElementById("password").value.trim();
-            const errorTeks = document.getElementById("login-error");
-
-            pelajarSemasa = semuaPelajar.find(p => p.id === idInput && p.katalaluan === passInput);
+        // CONTOH FUNGSI LOG MASUK YANG SEPADAN DENGAN APPS SCRIPT BARU
+async function handleLogin(idInput, passwordInput) {
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "login",
+                id: idInput,
+                password: passwordInput
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.result === "success") {
+            // Log masuk berjaya, simpan data sesi dan buka skrin utama
+            alert("Selamat kembali, " + data.nama);
+            // Sila teruskan ke fungsi paparan skrin utama anda di sini...
+        } else {
+            alert("Ralat: " + data.message);
+        }
+    } catch (error) {
+        console.error("Ralat sambungan:", error);
+        alert("Gagal menyambung ke pelayan. Sila semak internet anda.");
+    }
+}
 
             if (pelajarSemasa) {
                 errorTeks.textContent = "";
