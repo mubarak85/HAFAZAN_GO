@@ -469,7 +469,7 @@
             .catch(err => console.error(err));
         }
 
-        async function bukaLaporan() {
+      async function bukaLaporan() {
             if (!pelajarSemasa) return;
 
             document.getElementById("report-modal").classList.remove("d-none");
@@ -484,19 +484,30 @@
                     method: "POST",
                     body: JSON.stringify({ action: "get_logs", id: pelajarSemasa.id })
                 });
+                
+                // Mengesan jika respons dari server bukan JSON yang sah
+                if (!res.ok) {
+                    throw new Error("Respons pelayan tidak OK");
+                }
+
                 const data = await res.json();
                 document.getElementById("loading-report").classList.add("d-none");
 
-                if (data.result === "success" && data.logs.length > 0) {
+                if (data.result === "success" && data.logs && data.logs.length > 0) {
                     data.logs.forEach(log => {
-                        let namaSurahPendek = log.surah.split(". ")[1] || log.surah;
-                        let tarikhAsal = String(log.tarikh || "").split(" ")[0] || "-";
+                        // Memastikan data string selamat untuk diproses
+                        let surahPenuh = String(log.surah || "Tiada Nama");
+                        let namaSurahPendek = surahPenuh.includes(". ") ? surahPenuh.split(". ")[1] : surahPenuh;
+                        
+                        let tarikhPenuh = String(log.tarikh || "");
+                        let tarikhAsal = tarikhPenuh.includes(" ") ? tarikhPenuh.split(" ")[0] : tarikhPenuh;
+                        if (!tarikhAsal) tarikhAsal = "-";
 
                         let tr = document.createElement("tr");
                         tr.innerHTML = `
-                            <td><strong>${namaSurahPendek}</strong><br><span style="color:#64748b; font-size:10px;">MS ${log.mukaSurat}</span></td>
-                            <td>${log.fasa}</td>
-                            <td style="color:#10b981; font-weight:bold;">+${log.mata}</td>
+                            <td><strong>${namaSurahPendek}</strong><br><span style="color:#64748b; font-size:10px;">MS ${log.mukaSurat || "-"}</span></td>
+                            <td>${log.fasa || "-"}</td>
+                            <td style="color:#10b981; font-weight:bold;">+${log.mata || 0}</td>
                             <td style="color:#64748b; font-size:11px;">${tarikhAsal}</td>
                         `;
                         tbody.appendChild(tr);
@@ -505,10 +516,10 @@
                     tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b;">Belum ada sejarah log hafazan.</td></tr>`;
                 }
             } catch (err) {
+                console.error(err);
                 document.getElementById("loading-report").classList.add("d-none");
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#ef4444;">Gagal mengambil data log.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#ef4444;">Gagal mengambil data log. (Sila hantar rekod hafazan pertama dahulu)</td></tr>`;
             }
-        }
 
         function tutupLaporan() {
             document.getElementById("report-modal").classList.add("d-none");
