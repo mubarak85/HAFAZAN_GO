@@ -52,16 +52,34 @@
 
         <!-- =================== SKRIN UTAMA =================== -->
         <div id="main-screen" class="hidden flex flex-col flex-grow">
-            <!-- Header Profil -->
-            <div class="bg-gradient-to-br from-[#028261] to-[#01684d] p-6 text-white rounded-b-[2rem] shadow-md relative">
-                <div class="flex items-center justify-between mt-2">
-                    <div>
-                        <span class="text-[11px] font-semibold text-emerald-100/80 uppercase tracking-widest block mb-0.5">SELAMAT KEMBALI</span>
-                        <h2 id="user-nama" class="text-xl font-bold tracking-wide uppercase leading-tight">-</h2>
-                        <p id="user-kelas" class="text-xs text-emerald-100/90 mt-1 font-medium">Kelas: -</p>
+            
+            <!-- Header Profil Komprehensif (Ditambah Gambar, Guru & Total Point) -->
+            <div class="bg-gradient-to-br from-[#028261] to-[#01684d] p-6 text-white rounded-b-[2rem] shadow-md">
+                <div class="flex items-center gap-4 mt-2">
+                    <!-- Slot Gambar Pelajar + Fungsi Upload Click -->
+                    <div class="relative group shrink-0">
+                        <div class="w-16 h-16 rounded-2xl bg-white/20 border-2 border-white/40 overflow-hidden flex items-center justify-center text-2xl text-white shadow-inner relative">
+                            <img id="avatar-pelajar" src="" class="w-full h-full object-cover hidden">
+                            <i id="avatar-icon" class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <label for="upload-input" class="absolute -bottom-1 -right-1 w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center border-2 border-white text-[10px] cursor-pointer shadow hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="upload-input" accept="image/*" class="hidden" onchange="muatNaikGambar(this)">
                     </div>
-                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl text-white shrink-0">
-                        <i class="fa-solid fa-user-graduate"></i>
+
+                    <!-- Maklumat Pelajar & Guru Halaqah -->
+                    <div class="flex-grow min-w-0">
+                        <span class="text-[9px] font-bold text-emerald-200 uppercase tracking-widest block mb-0.5">REKOD HAFAZAN</span>
+                        <h2 id="user-nama" class="text-base font-bold tracking-wide uppercase leading-tight truncate">-</h2>
+                        <p id="user-kelas" class="text-[11px] text-emerald-100/90 font-medium">Kelas: -</p>
+                        <p id="user-guru" class="text-[11px] text-amber-200 font-semibold truncate mt-0.5"><i class="fa-solid fa-chalkboard-user mr-1 text-[9px]"></i> Guru: -</p>
+                    </div>
+
+                    <!-- Papan Jumlah Point Individu -->
+                    <div class="bg-white/15 backdrop-blur-md px-3 py-2 rounded-xl text-center shrink-0 border border-white/10 min-w-[70px]">
+                        <span class="text-[9px] text-emerald-200 font-bold uppercase tracking-wider block">MATA</span>
+                        <span id="user-mata" class="text-lg font-black block tracking-tight text-amber-300">0</span>
                     </div>
                 </div>
             </div>
@@ -74,15 +92,12 @@
                             <i class="fa-solid fa-pen-to-square text-[#028261]"></i> Tulis Muka Surat Di Sini:
                         </label>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-bold text-sm">
-                                M/S
-                            </span>
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 font-bold text-sm">M/S</span>
                             <input type="number" id="input-muka-surat" min="1" max="604" placeholder="Contoh: 1 - 604" oninput="autoKesanQuran()"
                                 class="w-full pl-14 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#028261] font-bold text-base transition-all">
                         </div>
                     </div>
 
-                    <!-- Kad Paparan Auto Detect -->
                     <div class="grid grid-cols-2 gap-3 bg-white p-3.5 rounded-xl border border-emerald-100/50 shadow-inner">
                         <div>
                             <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[9px]">AUTO JUZUK</span>
@@ -96,9 +111,8 @@
                 </div>
             </div>
 
-            <!-- Senarai Kad Fasa -->
+            <!-- Senarai Kad Fasa Tindakan -->
             <div class="p-5 space-y-4 flex-grow">
-                
                 <!-- FASA 1 -->
                 <div class="bg-[#f8fafc] border border-slate-100 p-5 rounded-2xl shadow-sm space-y-4">
                     <div class="flex items-start gap-3.5">
@@ -186,7 +200,7 @@
                                 </tr>
                             </thead>
                             <tbody id="report-body" class="text-xs text-slate-700 font-medium divide-y divide-slate-50">
-                                <!-- Data ditarik dari Sheets -->
+                                <!-- Data dinamik ditarik dari Sheets -->
                             </tbody>
                         </table>
                     </div>
@@ -195,8 +209,7 @@
                 <div class="p-4 bg-slate-50 border-t border-slate-100 grid grid-cols-2 gap-3 no-print">
                     <button onclick="cetakLaporan()" 
                         class="bg-[#028261] hover:bg-[#01684d] text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer">
-                        <i class="fa-solid fa-print"></i>
-                        <span>Cetak / PDF</span>
+                        <i class="fa-solid fa-print"></i><span>Cetak / PDF</span>
                     </button>
                     <button onclick="tutupLaporan()" 
                         class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-all cursor-pointer">
@@ -222,13 +235,10 @@
             const lblSurah = document.getElementById("auto-surah");
 
             if (!ms || ms < 1 || ms > 604) {
-                lblJuzuk.textContent = "-";
-                lblSurah.textContent = "-";
-                jzTerkesan = "-"; surahTerkesan = "-";
-                return;
+                lblJuzuk.textContent = "-"; lblSurah.textContent = "-";
+                jzTerkesan = "-"; surahTerkesan = "-"; return;
             }
 
-            // 1. Hitung Kedudukan Juzuk Automatik
             let jz = 1;
             if (ms >= 2 && ms <= 21) jz = 1;
             else if (ms >= 602) jz = 30;
@@ -237,7 +247,6 @@
             jzTerkesan = jz;
             lblJuzuk.textContent = "Juzuk " + jz;
 
-            // 2. Hitung Kedudukan Surah Automatik
             let surah = "Fatihah / Baqarah";
             if (ms === 1) surah = "Al-Fatihah";
             else if (ms >= 2 && ms <= 49) surah = "Al-Baqarah";
@@ -304,7 +313,7 @@
             else if (ms >= 556 && ms <= 557) surah = "Al-Munafiqun";
             else if (ms >= 558 && ms <= 559) surah = "At-Taghabun";
             else if (ms >= 560 && ms <= 561) surah = "At-Talaq";
-            else if (ms >= 562 && ms <= 563) surah = "At-Tahrim";
+            else if (ms >= 562 && ms <= 563) sur化 = "At-Tahrim";
             else if (ms >= 564 && ms <= 565) surah = "Al-Mulk";
             else if (ms >= 566 && ms <= 567) surah = "Al-Qalam";
             else if (ms >= 568 && ms <= 569) surah = "Al-Haqqah";
@@ -358,10 +367,25 @@
 
                 if (data.result === "success") {
                     pelajarSemasa = data.pelajar;
+                    
+                    // Kemas kini komponen UI Profil
                     document.getElementById("user-nama").textContent = pelajarSemasa.nama;
                     document.getElementById("user-kelas").textContent = "Kelas: " + (pelajarSemasa.kelas || "-");
+                    document.getElementById("user-guru").innerHTML = `<i class="fa-solid fa-chalkboard-user mr-1 text-[9px]"></i> Guru: ${pelajarSemasa.guru}`;
+                    document.getElementById("user-mata").textContent = pelajarSemasa.totalMata;
                     
-                    // Reset input muka surat asal
+                    // Kendali Imej Profil
+                    const imgAvatar = document.getElementById("avatar-pelajar");
+                    const iconAvatar = document.getElementById("avatar-icon");
+                    if (pelajarSemasa.gambar) {
+                        imgAvatar.src = pelajarSemasa.gambar;
+                        imgAvatar.classList.remove("hidden");
+                        iconAvatar.classList.add("hidden");
+                    } else {
+                        imgAvatar.classList.add("hidden");
+                        iconAvatar.classList.remove("hidden");
+                    }
+
                     document.getElementById("input-muka-surat").value = "";
                     autoKesanQuran();
 
@@ -372,11 +396,62 @@
                 }
             } catch (err) {
                 console.error(err);
-                paparRalatLogin("Ralat sambungan rangkaian internet.");
+                paparRalatLogin("Ralat sambungan internet.");
             } finally {
                 btnLogin.disabled = false;
                 btnLogin.innerHTML = `<span>Log Masuk</span><i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>`;
             }
+        }
+
+        // --- PROSES MUAT NAIK GAMBAR PROFIL ---
+        function muatNaikGambar(input) {
+            if (!input.files || !input.files[0] || !pelajarSemasa) return;
+            
+            const fail = input.files[0];
+            const reader = new FileReader();
+            
+            // Animasi Loading pada profil
+            const iconAvatar = document.getElementById("avatar-icon");
+            const imgAvatar = document.getElementById("avatar-pelajar");
+            iconAvatar.className = "fa-solid fa-spinner animate-spin text-white";
+            iconAvatar.classList.remove("hidden");
+            imgAvatar.classList.add("hidden");
+
+            reader.onload = async function(e) {
+                try {
+                    const res = await fetch(API_URL, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            action: "upload_image",
+                            id: pelajarSemasa.id,
+                            imageContent: e.target.result,
+                            imageType: fail.type
+                        })
+                    });
+                    const data = await res.json();
+                    
+                    if(data.result === "success") {
+                        imgAvatar.src = data.url;
+                        imgAvatar.classList.remove("hidden");
+                        iconAvatar.classList.add("hidden");
+                        pelajarSemasa.gambar = data.url;
+                        alert("Gambar profil berjaya dikemas kini!");
+                    } else {
+                        alert("Gagal memuat naik gambar: " + data.message);
+                        resetAvatarIcon();
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Ralat memuat naik fail.");
+                    resetAvatarIcon();
+                }
+            };
+            reader.readAsDataURL(fail);
+        }
+
+        function resetAvatarIcon() {
+            const iconAvatar = document.getElementById("avatar-icon");
+            iconAvatar.className = "fa-solid fa-user-graduate";
         }
 
         function paparRalatLogin(mesej) {
@@ -385,10 +460,9 @@
             errorDiv.classList.remove("hidden");
         }
 
-        // --- PROSES HANTAR DATA FASA ---
+        // --- PROSES HANTAR DATA REKOD ---
         async function hantarFasa(namaFasa, nilaiMata) {
             if (!pelajarSemasa) return;
-
             const mSInput = document.getElementById("input-muka-surat").value.trim();
 
             if (!mSInput || parseInt(mSInput) < 1 || parseInt(mSInput) > 604) {
@@ -430,7 +504,10 @@
                 const data = await response.json();
 
                 if (data.result === "success") {
-                    alert(`Rekod ${namaFasa} berjaya disimpan ke Google Sheets!`);
+                    alert(`Rekod ${namaFasa} berjaya disimpan!`);
+                    // Kemas kini mata paparan secara langsung (Real-time update)
+                    pelajarSemasa.totalMata = parseInt(pelajarSemasa.totalMata) + nilaiMata;
+                    document.getElementById("user-mata").textContent = pelajarSemasa.totalMata;
                 } else {
                     alert("Gagal disimpan: " + data.message);
                 }
