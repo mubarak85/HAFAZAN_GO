@@ -206,7 +206,7 @@
                 <div class="row-select">
                     <div class="col">
                         <label for="pilih-juzuk">Juzuk</label>
-                        <select id="pilih-juzuk" onchange="tukarJuzuk()"></select>
+                        <select id="pilih-juzuk"></select>
                     </div>
                     <div class="col">
                         <label for="pilih-surah">Surah</label>
@@ -222,7 +222,7 @@
             </div>
 
             <div class="status-banner">
-                Rekod Terakhir: <br>
+                Sesi Hafazan Semasa: <br>
                 <strong id="status-terakhir">-</strong>
             </div>
 
@@ -249,13 +249,12 @@
     </div>
 
     <!-- ==========================================
-       LOGIK JAVASCRIPT (SISTEM HUBUNGAN GOOGLE)
-       ========================================== -->
+        LOGIK JAVASCRIPT (SISTEM HUBUNGAN GOOGLE)
+        ========================================== -->
     <script>
-        // ⚠️ AMAT PENTING: Ganti teks di bawah dengan URL Web App Google Sheets anda
+        // ⚠️ PASTIKAN URL INI ADALAH URL WEB APP APPS SCRIPTS TERBARU ANDA
         const API_URL = "https://script.google.com/macros/s/AKfycbzvB0Rf15rY3PvHxGWRtSrCdMQhmOyRF6JoJXP2TKp7AjSXp8hZahC4K8KaYZOKaxVC3A/exec"; 
 
-        let semuaPelajar = [];
         let pelajarSemasa = null;
 
         const senaraiSurah = [
@@ -263,7 +262,7 @@
             "Yasin", "Al-Mulk", "Al-Waqi'ah", "Ar-Rahman", "Al-Kahf", "An-Naba'", "An-Nas"
         ];
 
-        // Jana Dropdown
+        // Jana Dropdown Juzuk
         const selectJuzuk = document.getElementById("pilih-juzuk");
         for (let i = 1; i <= 30; i++) {
             let opt = document.createElement("option");
@@ -271,6 +270,7 @@
             selectJuzuk.appendChild(opt);
         }
 
+        // Jana Dropdown Surah
         const selectSurah = document.getElementById("pilih-surah");
         senaraiSurah.forEach(surah => {
             let opt = document.createElement("option");
@@ -278,92 +278,112 @@
             selectSurah.appendChild(opt);
         });
 
-        function tukarJuzuk() { console.log("Juzuk ditukar: " + selectJuzuk.value); }
+        // ---------------------------------------------------------------
+        // PROSES LOG MASUK (HUBUNGI APPS SCRIPT)
+        // ---------------------------------------------------------------
+        async function logMasuk() {
+            const idInput = document.getElementById("username").value.trim();
+            const passwordInput = document.getElementById("password").value.trim();
+            const errorTeks = document.getElementById("login-error");
+            const btnLogin = document.getElementById("btn-login");
 
-        // Ambil Data Asal
-        function dapatkanDataPelajar() {
-            fetch(API_URL)
-            .then(res => res.json())
-            .then(data => { semuaPelajar = data; console.log("Data siap dimuat turun."); })
-            .catch(err => console.error("Ralat data:", err));
-        }
+            if (!idInput || !passwordInput) {
+                errorTeks.textContent = "Sila isi ID dan Kata Laluan!";
+                return;
+            }
 
-        // CONTOH FUNGSI LOG MASUK YANG SEPADAN DENGAN APPS SCRIPT BARU
-async function handleLogin(idInput, passwordInput) {
-    try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            body: JSON.stringify({
-                action: "login",
-                id: idInput,
-                password: passwordInput
-            })
-        });
-        
-        const data = await response.json();
-        
-        if (data.result === "success") {
-            // Log masuk berjaya, simpan data sesi dan buka skrin utama
-            alert("Selamat kembali, " + data.nama);
-            // Sila teruskan ke fungsi paparan skrin utama anda di sini...
-        } else {
-            alert("Ralat: " + data.message);
-        }
-    } catch (error) {
-        console.error("Ralat sambungan:", error);
-        alert("Gagal menyambung ke pelayan. Sila semak internet anda.");
-    }
-}
+            btnLogin.textContent = "Menghubung pelayan...";
+            btnLogin.disabled = true;
+            errorTeks.textContent = "";
 
-            if (pelajarSemasa) {
-                errorTeks.textContent = "";
-                document.getElementById("login-box").classList.add("d-none");
-                document.getElementById("dashboard-box").classList.remove("d-none");
-                document.getElementById("nama-pelajar").textContent = pelajarSemasa.nama;
-                document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
-                document.getElementById("pilih-juzuk").value = pelajarSemasa.juzuk || "Juzuk 1";
-                document.getElementById("pilih-surah").value = pelajarSemasa.surah || "Al-Baqarah";
-                document.getElementById("pilih-ms").value = pelajarSemasa.mukasurat || "2";
-                kemaskiniTeksStatus(pelajarSemasa.juzuk, pelajarSemasa.surah, pelajarSemasa.mukasurat, pelajarSemasa.fasa);
-            } else {
-                errorTeks.textContent = "ID atau Kata Laluan Salah / Sila semak sambungan internet.";
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "login",
+                        id: idInput,
+                        password: passwordInput
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.result === "success") {
+                    // Simpan data sesi pelajar
+                    pelajarSemasa = {
+                        id: idInput,
+                        nama: data.nama,
+                        mata: parseInt(data.mata) || 0
+                    };
+
+                    // Tukar Paparan ke Dashboard
+                    document.getElementById("login-box").classList.add("d-none");
+                    document.getElementById("dashboard-box").classList.remove("d-none");
+                    
+                    document.getElementById("nama-pelajar").textContent = pelajarSemasa.nama;
+                    document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
+                    
+                    kemaskiniTeksStatus("Juzuk 1", "Al-Baqarah", "1", "Mula Sesi");
+                } else {
+                    errorTeks.textContent = data.message;
+                }
+            } catch (error) {
+                console.error("Ralat sambungan:", error);
+                errorTeks.textContent = "Gagal masuk. Sila semak sambungan internet/URL API.";
+            } finally {
+                btnLogin.textContent = "Masuk Permainan";
+                btnLogin.disabled = false;
             }
         }
 
         function kemaskiniTeksStatus(juzuk, surah, ms, fasa) {
             document.getElementById("status-terakhir").textContent = 
-                `${juzuk || 'Juzuk 1'} | ${surah || 'Al-Baqarah'} | Muka Surat ${ms || '2'} (${fasa || 'Baru Mula'})`;
+                `${juzuk} | ${surah} | Muka Surat ${ms} (${fasa})`;
         }
 
+        // ---------------------------------------------------------------
+        // PROSES SIMPAN REKOD HAFAZAN (APPEND LOG)
+        // ---------------------------------------------------------------
         function selesaiFasa(fasaNama, mataGanjaran) {
             if (!pelajarSemasa) return;
+            
             const jDipilih = document.getElementById("pilih-juzuk").value;
             const sDipilih = document.getElementById("pilih-surah").value;
             const mDipilih = document.getElementById("pilih-ms").value;
             
-            alert(`Alhamdulillah! +${mataGanjaran} Mata dihantar.`);
+            alert(`Alhamdulillah! +${mataGanjaran} Mata berjaya dihantar ke log.`);
 
+            // Hantar data rekod aktiviti ke server Google Sheets
             fetch(API_URL, {
                 method: "POST",
-                mode: "no-cors",
+                mode: "no-cors", // Memastikan CORS tidak menyekat penghantaran data
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: pelajarSemasa.id, mata: mataGanjaran, juzuk: jDipilih, surah: sDipilih, mukasurat: mDipilih, fasa: fasaNama })
+                body: JSON.stringify({ 
+                    action: "log",
+                    id: pelajarSemasa.id, 
+                    mata: mataGanjaran, 
+                    juzuk: jDipilih, 
+                    surah: sDipilih, 
+                    mukaSurat: mDipilih, 
+                    fasa: fasaNama 
+                })
             })
             .then(() => {
+                // Kemaskini paparan skrin secara langsung
                 pelajarSemasa.mata += mataGanjaran;
                 document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
                 kemaskiniTeksStatus(jDipilih, sDipilih, mDipilih, fasaNama);
-            });
+            })
+            .catch(err => console.error("Ralat menyimpan rekod:", err));
         }
 
         function logKeluar() {
             pelajarSemasa = null;
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
             document.getElementById("login-box").classList.remove("d-none");
             document.getElementById("dashboard-box").classList.add("d-none");
-            dapatkanDataPelajar();
         }
-
-        dapatkanDataPelajar();
     </script>
 </body>
 </html>
