@@ -21,7 +21,7 @@
 
     <div class="w-full max-w-md mx-auto bg-white min-h-screen shadow-xl flex flex-col justify-between relative pb-8">
         
-        <!-- LOG MASUK SCREEN -->
+        <!-- =================== SKRIN LOG MASUK =================== -->
         <div id="login-screen" class="p-6 flex flex-col justify-center items-center flex-grow">
             <div class="w-20 h-20 bg-[#d1fae5] rounded-2xl flex items-center justify-center mb-4 text-[#047857] text-3xl shadow-inner">
                 <i class="fa-solid fa-book-quran"></i>
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <!-- UTAMA SCREEN (100% Menepati Gambar 124041) -->
+        <!-- =================== SKRIN UTAMA (DENGAN INPUT) =================== -->
         <div id="main-screen" class="hidden flex flex-col flex-grow">
             <!-- Header Profil -->
             <div class="bg-gradient-to-br from-[#028261] to-[#01684d] p-6 text-white rounded-b-[2rem] shadow-md relative">
@@ -62,6 +62,37 @@
                     </div>
                     <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl text-white shrink-0">
                         <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAHAGIAN AUTO DATA & INPUT MUKA SURAT -->
+            <div class="px-5 pt-5">
+                <div class="bg-emerald-50/60 border border-emerald-100/80 p-4 rounded-2xl space-y-3">
+                    <div class="flex justify-between items-center text-xs pb-2 border-b border-emerald-100">
+                        <span class="font-bold text-emerald-800 uppercase tracking-wide flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-info text-emerald-600"></i> Maklumat Al-Quran Semasa
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[10px]">AUTO JUZUK</span>
+                            <span id="auto-juzuk" class="text-sm font-bold text-slate-800 block mt-0.5">-</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[10px]">AUTO SURAH</span>
+                            <span id="auto-surah" class="text-sm font-bold text-slate-800 block mt-0.5">-</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 font-bold uppercase tracking-wider text-[10px] mb-1.5">MASUKKAN NO. MUKA SURAT BACAAN</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </span>
+                            <input type="number" id="input-muka-surat" placeholder="Contoh: 142" 
+                                class="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#028261] font-semibold text-sm transition-all">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,7 +162,7 @@
             </div>
         </div>
 
-        <!-- MODAL POPUP LAPORAN (Menampilkan Surah, Juzuk & Muka Surat) -->
+        <!-- =================== POPUP LAPORAN =================== -->
         <div id="report-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
             <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden transform transition-all flex flex-col max-h-[85vh]">
                 
@@ -179,7 +210,7 @@
     </div>
 
     <script>
-        // MASUKKAN URL WEB APP DEPLOY AKTIF ANDA DI SINI
+        // GANTIKAN URL WEB APP AKTIF ANDA DI SINI
         const API_URL = "https://script.google.com/macros/s/AKfycbw80K0gSeCjDMqmbFrt_FS2kIXylLjZAX5RTkGVbciDBzJZwZrw2SsSps0a1Ku-qqR7YQ/exec";
         let pelajarSemasa = null;
 
@@ -205,9 +236,19 @@
                 const data = await response.json();
 
                 if (data.result === "success") {
-                    pelajarSemasa = data.pelajar; // Memegang data id, nama, kelas, surah, juzuk, m/s
+                    pelajarSemasa = data.pelajar;
+                    
+                    // Suntik teks data pelajar ke UI
                     document.getElementById("user-nama").textContent = pelajarSemasa.nama;
-                    document.getElementById("user-kelas").textContent = "Kelas: " + pelajarSemasa.kelas;
+                    document.getElementById("user-kelas").textContent = "Kelas: " + (pelajarSemasa.kelas || "-");
+                    
+                    // Papar maklumat auto surah dan juzuk dari Sheets
+                    document.getElementById("auto-juzuk").textContent = "Juzuk " + (pelajarSemasa.juzuk || "-");
+                    document.getElementById("auto-surah").textContent = pelajarSemasa.surah || "-";
+                    
+                    // Kosongkan semula kotak penulisan muka surat lama
+                    document.getElementById("input-muka-surat").value = "";
+
                     document.getElementById("login-screen").classList.add("hidden");
                     document.getElementById("main-screen").classList.remove("hidden");
                 } else {
@@ -231,12 +272,19 @@
         async function hantarFasa(namaFasa, nilaiMata) {
             if (!pelajarSemasa) return;
 
-            // Membina mesej pengesahan paparan maklumat auto dari Sheets
+            const mSInput = document.getElementById("input-muka-surat").value.trim();
+
+            // Saringan pengesahan pengisian muka surat
+            if (!mSInput) {
+                alert("Sila tulis nombor Muka Surat terlebih dahulu sebelum menyimpan rekod!");
+                document.getElementById("input-muka-surat").focus();
+                return;
+            }
+
             const infoSahkan = `Sahkan penghantaran untuk ${namaFasa}?\n\n` +
-                               `Auto Maklumat Semasa:\n` +
                                `• Surah: ${pelajarSemasa.surah}\n` +
                                `• Juzuk: ${pelajarSemasa.juzuk}\n` +
-                               `• Muka Surat: ${pelajarSemasa.mukaSurat}`;
+                               `• Muka Surat Baru: ${mSInput}`;
 
             if (!confirm(infoSahkan)) return;
 
@@ -258,16 +306,16 @@
                         id: pelajarSemasa.id,
                         nama: pelajarSemasa.nama,
                         fasa: namaFasa,
-                        juzuk: pelajarSemasa.juzuk,       // Auto dihantar dari maklumat pelajar
-                        surah: pelajarSemasa.surah,       // Auto dihantar dari maklumat pelajar
-                        mukaSurat: pelajarSemasa.mukaSurat, // Auto dihantar dari maklumat pelajar
+                        juzuk: pelajarSemasa.juzuk,       
+                        surah: pelajarSemasa.surah,       
+                        mukaSurat: mSInput, // Menghantar nombor yang ditaip oleh pengguna
                         mata: nilaiMata
                     })
                 });
                 const data = await response.json();
 
                 if (data.result === "success") {
-                    alert(`Rekod ${namaFasa} berjaya disimpan secara automatik!`);
+                    alert(`Rekod bagi ${namaFasa} di muka surat ${mSInput} berjaya disimpan!`);
                 } else {
                     alert("Gagal disimpan: " + data.message);
                 }
