@@ -1,1 +1,349 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hafazan Al-Quran</title>
+    <style>
+        /* ==========================================
+           REKA BENTUK CSS (GAYA MODEN MOBILE-FIRST)
+           ========================================== */
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --secondary: #0f172a;
+            --success: #10b981;
+            --bg: #f1f5f9;
+            --text-muted: #64748b;
+        }
 
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--secondary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            padding: 16px;
+        }
+
+        .box {
+            background: #ffffff;
+            padding: 28px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .app-logo {
+            font-size: 40px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 0 0 8px 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        p {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            font-size: 15px;
+            background-color: #f8fafc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover { background-color: var(--primary-dark); }
+        .d-none { display: none !important; }
+
+        .header-user {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text { font-size: 13px; color: var(--text-muted); }
+        .header-user h3 { margin: 2px 0 0 0; font-size: 18px; }
+
+        .score-badge {
+            background-color: #fef3c7;
+            color: #d97706;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .divider {
+            border: 0;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 20px 0;
+        }
+
+        .row-select { display: flex; gap: 12px; }
+        .col { flex: 1; }
+        .col label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+        }
+
+        .status-banner {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .game-steps { margin-top: 24px; }
+        .step-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .step-num {
+            background: var(--secondary);
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .step-card h5 { margin: 0; font-size: 14px; }
+        .step-card p { text-align: left; margin-bottom: 12px; font-size: 13px; }
+        .step-card button { padding: 10px; font-size: 14px; background-color: var(--success); }
+        .btn-logout { background-color: #f1f5f9; color: #64748b; margin-top: 10px; }
+        .btn-logout:hover { background-color: #e2e8f0; }
+        .error { color: #ef4444; font-size: 13px; text-align: center; margin-top: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1. SKRIN LOG MASUK -->
+        <div id="login-box" class="box">
+            <div class="app-logo">🕌</div>
+            <h2>Permainan Hafazan</h2>
+            <p>Sila log masuk untuk meneruskan talaqqi & hafazan</p>
+            
+            <div class="input-group">
+                <input type="text" id="username" placeholder="ID Pelajar (Contoh: 101)" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Kata Laluan" required>
+            </div>
+            
+            <button onclick="logMasuk()" id="btn-login">Masuk Permainan</button>
+            <p id="login-error" class="error"></p>
+        </div>
+
+        <!-- 2. SKRIN UTAMA (DASHBOARD) -->
+        <div id="dashboard-box" class="box d-none">
+            <div class="header-user">
+                <div>
+                    <span class="welcome-text">Selamat Kembali,</span>
+                    <h3 id="nama-pelajar">-</h3>
+                </div>
+                <div class="score-badge">🏆 <span id="mata-pelajar">0</span> PTS</div>
+            </div>
+            
+            <hr class="divider">
+
+            <div class="selection-zone">
+                <div class="row-select">
+                    <div class="col">
+                        <label for="pilih-juzuk">Juzuk</label>
+                        <select id="pilih-juzuk" onchange="tukarJuzuk()"></select>
+                    </div>
+                    <div class="col">
+                        <label for="pilih-surah">Surah</label>
+                        <select id="pilih-surah"></select>
+                    </div>
+                </div>
+                <div class="row-select" style="margin-top: 10px;">
+                    <div class="col">
+                        <label for="pilih-ms">Muka Surat (1 - 604)</label>
+                        <input type="number" id="pilih-ms" min="1" max="604" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-banner">
+                Rekod Terakhir: <br>
+                <strong id="status-terakhir">-</strong>
+            </div>
+
+            <div class="game-steps">
+                <div class="step-card">
+                    <div class="step-header"><span class="step-num">1</span><h5>FASA TALAQQI</h5></div>
+                    <p>Dengar bacaan guru atau master audio.</p>
+                    <button onclick="selesaiFasa('Talaqqi', 10)">Selesai Talaqqi (+10 Mata)</button>
+                </div>
+                <div class="step-card">
+                    <div class="step-header"><span class="step-num">2</span><h5>FASA HAFAZAN</h5></div>
+                    <p>Ulang dan hafal ayat/muka surat.</p>
+                    <button onclick="selesaiFasa('Hafazan', 30)">Selesai Hafazan (+30 Mata)</button>
+                </div>
+                <div class="step-card">
+                    <div class="step-header"><span class="step-num">3</span><h5>FASA MURAJAAH</h5></div>
+                    <p>Ulang semula bacaan hafazan lama.</p>
+                    <button onclick="selesaiFasa('Murajaah', 20)">Selesai Murajaah (+20 Mata)</button>
+                </div>
+            </div>
+
+            <button class="btn-logout" onclick="logKeluar()">Log Keluar</button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       LOGIK JAVASCRIPT (SISTEM HUBUNGAN GOOGLE)
+       ========================================== -->
+    <script>
+        // ⚠️ AMAT PENTING: Ganti teks di bawah dengan URL Web App Google Sheets anda
+        const API_URL = "https://script.google.com/macros/s/AKfycbyVH-VXlMRL6d9UV2u3GdLLTkyr6tPaeFXOccgbDF5f5teFbadqYXh9yCbq_dQ23OD4_g/exec"; 
+
+        let semuaPelajar = [];
+        let pelajarSemasa = null;
+
+        const senaraiSurah = [
+            "Al-Fatihah", "Al-Baqarah", "Ali 'Imran", "An-Nisa'", "Al-Ma'idah", "Al-An'am", 
+            "Yasin", "Al-Mulk", "Al-Waqi'ah", "Ar-Rahman", "Al-Kahf", "An-Naba'", "An-Nas"
+        ];
+
+        // Jana Dropdown
+        const selectJuzuk = document.getElementById("pilih-juzuk");
+        for (let i = 1; i <= 30; i++) {
+            let opt = document.createElement("option");
+            opt.value = "Juzuk " + i; opt.textContent = "Juzuk " + i;
+            selectJuzuk.appendChild(opt);
+        }
+
+        const selectSurah = document.getElementById("pilih-surah");
+        senaraiSurah.forEach(surah => {
+            let opt = document.createElement("option");
+            opt.value = surah; opt.textContent = surah;
+            selectSurah.appendChild(opt);
+        });
+
+        function tukarJuzuk() { console.log("Juzuk ditukar: " + selectJuzuk.value); }
+
+        // Ambil Data Asal
+        function dapatkanDataPelajar() {
+            fetch(API_URL)
+            .then(res => res.json())
+            .then(data => { semuaPelajar = data; console.log("Data siap dimuat turun."); })
+            .catch(err => console.error("Ralat data:", err));
+        }
+
+        function logMasuk() {
+            const idInput = document.getElementById("username").value.trim();
+            const passInput = document.getElementById("password").value.trim();
+            const errorTeks = document.getElementById("login-error");
+
+            pelajarSemasa = semuaPelajar.find(p => p.id === idInput && p.katalaluan === passInput);
+
+            if (pelajarSemasa) {
+                errorTeks.textContent = "";
+                document.getElementById("login-box").classList.add("d-none");
+                document.getElementById("dashboard-box").classList.remove("d-none");
+                document.getElementById("nama-pelajar").textContent = pelajarSemasa.nama;
+                document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
+                document.getElementById("pilih-juzuk").value = pelajarSemasa.juzuk || "Juzuk 1";
+                document.getElementById("pilih-surah").value = pelajarSemasa.surah || "Al-Baqarah";
+                document.getElementById("pilih-ms").value = pelajarSemasa.mukasurat || "2";
+                kemaskiniTeksStatus(pelajarSemasa.juzuk, pelajarSemasa.surah, pelajarSemasa.mukasurat, pelajarSemasa.fasa);
+            } else {
+                errorTeks.textContent = "ID atau Kata Laluan Salah / Sila semak sambungan internet.";
+            }
+        }
+
+        function kemaskiniTeksStatus(juzuk, surah, ms, fasa) {
+            document.getElementById("status-terakhir").textContent = 
+                `${juzuk || 'Juzuk 1'} | ${surah || 'Al-Baqarah'} | Muka Surat ${ms || '2'} (${fasa || 'Baru Mula'})`;
+        }
+
+        function selesaiFasa(fasaNama, mataGanjaran) {
+            if (!pelajarSemasa) return;
+            const jDipilih = document.getElementById("pilih-juzuk").value;
+            const sDipilih = document.getElementById("pilih-surah").value;
+            const mDipilih = document.getElementById("pilih-ms").value;
+            
+            alert(`Alhamdulillah! +${mataGanjaran} Mata dihantar.`);
+
+            fetch(API_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: pelajarSemasa.id, mata: mataGanjaran, juzuk: jDipilih, surah: sDipilih, mukasurat: mDipilih, fasa: fasaNama })
+            })
+            .then(() => {
+                pelajarSemasa.mata += mataGanjaran;
+                document.getElementById("mata-pelajar").textContent = pelajarSemasa.mata;
+                kemaskiniTeksStatus(jDipilih, sDipilih, mDipilih, fasaNama);
+            });
+        }
+
+        function logKeluar() {
+            pelajarSemasa = null;
+            document.getElementById("login-box").classList.remove("d-none");
+            document.getElementById("dashboard-box").classList.add("d-none");
+            dapatkanDataPelajar();
+        }
+
+        dapatkanDataPelajar();
+    </script>
+</body>
+</html>
