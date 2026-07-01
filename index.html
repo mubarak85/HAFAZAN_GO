@@ -161,7 +161,6 @@
 
     <!-- JAVASCRIPT SISTEM -->
     <script>
-        // Sila pastikan URL Macro Google Apps Script anda adalah tepat
         const API_URL = "https://script.google.com/macros/s/AKfycbz_n9ixypCahYEWko31IeY5oaqyQeFkjyDYHPIqMyYUIi9j-MmhD9Rt56acu-L0b_g_Sg/exec";
 
         let pelajarSemasa = null;
@@ -177,7 +176,6 @@
                 return;
             }
 
-            // Tukar butang ke keadaan loading
             errorDiv.classList.add("hidden");
             btnLogin.disabled = true;
             btnLogin.innerHTML = `<div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>`;
@@ -192,11 +190,9 @@
                 if (data.result === "success") {
                     pelajarSemasa = data.pelajar;
                     
-                    // Kemas kini paparan aplikasi utama
                     document.getElementById("user-nama").textContent = pelajarSemasa.nama;
                     document.getElementById("user-kelas").textContent = "Kelas: " + pelajarSemasa.kelas;
                     
-                    // Tukar skrin
                     document.getElementById("login-screen").classList.add("hidden");
                     document.getElementById("main-screen").classList.remove("hidden");
                 } else {
@@ -231,7 +227,7 @@
                         id: pelajarSemasa.id,
                         nama: pelajarSemasa.nama,
                         mata: mata,
-                        juzuk: "-",       // Boleh dikembangkan untuk input dinamik kemudian
+                        juzuk: "-",       
                         surah: "Talaqqi",  
                         mukaSurat: "-",   
                         fasa: fasa
@@ -250,11 +246,10 @@
             }
         }
 
-        // 3. FUNGSI AMBIL & PAPAR LAPORAN (GET LOGS) - VERSI ULTRASAFE
+        // 3. FUNGSI AMBIL & PAPAR LAPORAN (GET LOGS)
         async function bukaLaporan() {
             if (!pelajarSemasa) return;
 
-            // Buka Modal Popup dahulu
             document.getElementById("report-modal").classList.remove("hidden");
             document.getElementById("report-title").textContent = "Laporan Rekod Hafazan: " + pelajarSemasa.nama;
             document.getElementById("loading-report").classList.remove("hidden");
@@ -275,8 +270,7 @@
 
                 if (data.result === "success" && data.logs && data.logs.length > 0) {
                     data.logs.forEach(log => {
-                        // Memastikan pembersihan rentetan data selamat digunakan
-                        let surahPenuh = String(log.surah || "Tiada Nama");
+                        let surahPenuh = String(log.surah || "Tiada Name");
                         let namaSurah = surahPenuh.includes(". ") ? surahPenuh.split(". ")[1] : surahPenuh;
                         
                         let tarikhPenuh = String(log.tarikh || "");
@@ -293,7 +287,7 @@
                             <td class="py-3 text-slate-500 font-medium text-[11px]">${log.fasa || "-"}</td>
                             <td class="py-3 text-center text-emerald-600 font-bold">+${log.mata || 0}</td>
                             <td class="py-3 text-right text-slate-400 font-medium text-[11px]">${tarikhPintas}</td>
-                        `;
+                        `; // Ditutup dengan betul di sini
                         tbody.appendChild(tr);
                     });
                 } else {
