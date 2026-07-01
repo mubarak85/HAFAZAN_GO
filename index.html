@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Rekod Hafazan Al-Quran</title>
-    <!-- Tailwind CSS untuk reka bentuk responsif & moden -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome untuk ikon bergrafik -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f8fafc;
-        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
         @media print {
             body * { visibility: hidden; }
             #print-area, #print-area * { visibility: visible; }
@@ -24,12 +19,11 @@
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- CONTAINER UTAMA -->
     <div class="w-full max-w-md mx-auto bg-white min-h-screen shadow-xl flex flex-col justify-between relative pb-8">
         
-        <!-- SECTION 1: LOG MASUK (LOGIN) -->
+        <!-- SECTION 1: LOG MASUK (Sama Tepat Gambar 122355) -->
         <div id="login-screen" class="p-6 flex flex-col justify-center items-center flex-grow">
-            <div class="w-20 h-20 bg-emerald-100 rounded-2xl flex items-center justify-center mb-4 text-emerald-600 text-3xl shadow-inner">
+            <div class="w-20 h-20 bg-[#d1fae5] rounded-2xl flex items-center justify-center mb-4 text-[#047857] text-3xl shadow-inner">
                 <i class="fa-solid fa-book-quran"></i>
             </div>
             <h1 class="text-2xl font-bold text-slate-900 tracking-tight text-center">Sistem Rekod Hafazan</h1>
@@ -37,99 +31,94 @@
             
             <div class="w-full space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">ID Pelajar</label>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">ID PELAJAR</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
                             <i class="fa-solid fa-id-card"></i>
                         </span>
-                        <input type="text" id="input-id" placeholder="Contoh: ADAM01" 
-                            class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white font-medium uppercase transition-all">
+                        <input type="text" id="input-id" placeholder="Masukkan ID Anda" 
+                            class="w-full pl-11 pr-4 py-3.5 bg-[#f8fafc] border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#028261] focus:bg-white font-medium uppercase transition-all">
                     </div>
                 </div>
                 
                 <button onclick="prosesLogin()" id="btn-login"
-                    class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl shadow-md shadow-emerald-200 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    class="w-full bg-[#028261] hover:bg-[#01684d] text-white font-semibold py-3.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer text-sm">
                     <span>Log Masuk</span>
                     <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
                 </button>
-                <div id="login-error" class="text-sm text-red-500 text-center font-medium hidden"></div>
+                <div id="login-error" class="text-xs text-red-500 text-center font-semibold mt-2 hidden"></div>
             </div>
         </div>
 
-        <!-- SECTION 2: UTAMA (MAIN APP) -->
+        <!-- SECTION 2: UTAMA (Sama Tepat Gambar 121856) -->
         <div id="main-screen" class="hidden flex flex-col flex-grow">
             <!-- Header Profil -->
-            <div class="bg-gradient-to-br from-emerald-600 to-teal-700 p-6 text-white rounded-b-[2rem] shadow-lg relative">
-                <div class="flex items-center justify-between">
+            <div class="bg-gradient-to-br from-[#028261] to-[#01684d] p-6 text-white rounded-b-[2rem] shadow-md relative">
+                <div class="flex items-center justify-between mt-2">
                     <div>
-                        <span class="text-xs font-semibold text-emerald-100 uppercase tracking-widest block mb-0.5">Selamat Kembali</span>
-                        <h2 id="user-nama" class="text-xl font-bold tracking-tight">Pelajar Cemerlang</h2>
-                        <p id="user-kelas" class="text-xs text-emerald-100 mt-0.5 font-medium opacity-90">Kelas: -</p>
+                        <span class="text-[11px] font-semibold text-emerald-100/80 uppercase tracking-widest block mb-0.5">SELAMAT KEMBALI</span>
+                        <h2 id="user-nama" class="text-2xl font-bold tracking-wide uppercase">-</h2>
+                        <p id="user-kelas" class="text-xs text-emerald-100/90 mt-0.5 font-medium">Kelas: -</p>
                     </div>
-                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center text-xl">
+                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-xl text-white">
                         <i class="fa-solid fa-user-graduate"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Kandungan Utama Menu & Borang Input Semuanya Sekali -->
-            <div class="p-6 space-y-6 flex-grow">
+            <!-- Senarai Kad Fasa -->
+            <div class="p-5 space-y-4 flex-grow">
                 
-                <!-- BORANG UTAMA INTEGRASI (TALAQQI, HAFAZAN, MURAJAAH) -->
-                <div class="bg-slate-50 border border-slate-100 p-5 rounded-2xl space-y-4">
-                    <div class="flex items-start gap-3">
-                        <div class="w-7 h-7 bg-emerald-600 text-white font-bold rounded-full flex items-center justify-center text-xs shadow-sm mt-0.5">
-                            <i class="fa-solid fa-pen-to-square text-[10px]"></i>
-                        </div>
-                        <div class="w-full">
-                            <h3 class="font-bold text-slate-900 uppercase text-sm tracking-wide">Kemas Masuk Rekod Hafazan</h3>
-                            <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Sila pilih fasa tugasan dan isi nombor muka surat Al-Quran anda di bawah.</p>
+                <!-- FASA 1: TALAQQI -->
+                <div class="bg-[#f8fafc] border border-slate-100 p-5 rounded-2xl shadow-sm space-y-4">
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-6 h-6 bg-[#028261] text-white font-bold rounded-md flex items-center justify-center text-xs shrink-0 mt-0.5">1</div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 uppercase text-xs tracking-wider">FASA TALAQQI</h3>
+                            <p class="text-[12px] text-slate-500 mt-1 leading-relaxed">Dengar bacaan guru atau rakaman master audio dengan teliti sebelum meneruskan hafazan mandiri.</p>
                         </div>
                     </div>
-
-                    <!-- 1. Pilihan Fasa Tugasan -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase mb-2">Pilih Fasa Tugasan</label>
-                        <select id="input-fasa" onchange="kemaskiniPaparanMata()"
-                            class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium text-sm transition-all cursor-pointer">
-                            <option value="FASA TALAQQI">Fasa 1: Talaqqi (+10 Mata)</option>
-                            <option value="FASA HAFAZAN">Fasa 2: Hafazan Baharu (+20 Mata)</option>
-                            <option value="FASA MURAJAAH">Fasa 3: Murajaah / Semakan (+15 Mata)</option>
-                        </select>
-                    </div>
-
-                    <!-- 2. Ruangan Input Muka Surat -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase mb-2">Muka Surat (Al-Quran)</label>
-                        <input type="number" id="input-page" oninput="kiraSurahDanJuzuk()" min="1" max="604" placeholder="Masukkan No. Muka Surat (1 - 604)" 
-                            class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium transition-all">
-                    </div>
-
-                    <!-- 3. Paparan Automatik Info Surah & Juzuk -->
-                    <div class="grid grid-cols-2 gap-3 bg-white p-3 rounded-xl border border-slate-100">
-                        <div class="p-2">
-                            <span class="block text-[10px] uppercase font-bold text-slate-400">Surah</span>
-                            <span id="output-surah" class="text-sm font-bold text-slate-800">-</span>
-                        </div>
-                        <div class="p-2 border-l border-slate-100">
-                            <span class="block text-[10px] uppercase font-bold text-slate-400">Juzuk</span>
-                            <span id="output-juzuk" class="text-sm font-bold text-slate-800">-</span>
-                        </div>
-                    </div>
-
-                    <!-- Butang Hantar Tunggal -->
-                    <button onclick="hantarRekodHafazan()" id="btn-submit-rekod"
-                        class="w-full mt-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-md shadow-emerald-100 flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-paper-plane text-xs"></i>
-                        <span>Hantar Rekod Tugasan</span>
+                    <button onclick="hantarFasa('FASA TALAQQI', 10)" id="btn-talaqqi"
+                        class="w-full bg-[#028261] hover:bg-[#01684d] text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Selesai Talaqqi (+10 Mata)</span>
                     </button>
                 </div>
 
-                <!-- Kad Aksi Tambahan -->
+                <!-- FASA 2: HAFAZAN -->
+                <div class="bg-[#f8fafc] border border-slate-100 p-5 rounded-2xl shadow-sm space-y-4">
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-6 h-6 bg-[#028261] text-white font-bold rounded-md flex items-center justify-center text-xs shrink-0 mt-0.5">2</div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 uppercase text-xs tracking-wider">FASA HAFAZAN BAHARU</h3>
+                            <p class="text-[12px] text-slate-500 mt-1 leading-relaxed">Mula menghafal ayat atau muka surat baharu yang telah disemak secara bertingkat sehingga lancar.</p>
+                        </div>
+                    </div>
+                    <button onclick="hantarFasa('FASA HAFAZAN', 20)" id="btn-hafazan"
+                        class="w-full bg-[#028261] hover:bg-[#01684d] text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Selesai Hafazan Baharu (+20 Mata)</span>
+                    </button>
+                </div>
+
+                <!-- FASA 3: MURAJAAH -->
+                <div class="bg-[#f8fafc] border border-slate-100 p-5 rounded-2xl shadow-sm space-y-4">
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-6 h-6 bg-[#028261] text-white font-bold rounded-md flex items-center justify-center text-xs shrink-0 mt-0.5">3</div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 uppercase text-xs tracking-wider">FASA MURAJAAH / SEMAKAN</h3>
+                            <p class="text-[12px] text-slate-500 mt-1 leading-relaxed">Mengulang semula hafazan lama bagi mengekalkan kualiti ingatan jangka panjang.</p>
+                        </div>
+                    </div>
+                    <button onclick="hantarFasa('FASA MURAJAAH', 15)" id="btn-murajaah"
+                        class="w-full bg-[#028261] hover:bg-[#01684d] text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Selesai Murajaah / Semakan (+15 Mata)</span>
+                    </button>
+                </div>
+
+                <!-- Aksi Bawah -->
                 <div class="space-y-3 pt-2">
                     <button onclick="bukaLaporan()" 
                         class="w-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold py-3.5 rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
-                        <i class="fa-solid fa-chart-pie text-emerald-600"></i>
+                        <i class="fa-solid fa-chart-pie text-[#028261]"></i>
                         <span>Lihat Laporan Individu</span>
                     </button>
                     
@@ -142,195 +131,58 @@
             </div>
         </div>
 
-        <!-- MODAL POPUP: LAPORAN REKOD HAFAZAN -->
+        <!-- MODAL POPUP LAPORAN (Ditambah Maklumat Surah/Juzuk) -->
         <div id="report-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
             <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden transform transition-all flex flex-col max-h-[85vh]">
                 
-                <!-- Kawasan Yang Dicetak -->
                 <div id="print-area" class="p-6 overflow-y-auto flex-grow space-y-4">
                     <div class="text-center pb-2 border-b border-slate-100">
-                        <h3 id="report-title" class="text-lg font-bold text-slate-900 tracking-tight">Laporan Rekod Hafazan</h3>
-                        <p class="text-xs text-slate-400 mt-0.5">Sistem Automasi Data Rekod Pintar</p>
+                        <h3 id="report-title" class="text-base font-bold text-slate-900 tracking-tight">Laporan Rekod Hafazan</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Sistem Automasi Data Rekod Pintar</p>
                     </div>
 
-                    <!-- Loading Indicator -->
                     <div id="loading-report" class="flex flex-col items-center justify-center py-12 gap-3">
-                        <div class="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
-                        <p class="text-xs text-slate-500 font-medium">Sedang memuat data dari pelayan...</p>
+                        <div class="w-7 h-7 border-3 border-[#028261] border-t-transparent rounded-full animate-spin"></div>
+                        <p class="text-xs text-slate-500 font-medium">Memuatkan data rekod...</p>
                     </div>
 
-                    <!-- Jadual Data Log -->
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                                    <th class="pb-2 font-semibold">Surah/MS</th>
-                                    <th class="pb-2 font-semibold">Fasa</th>
+                                <tr class="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                    <th class="pb-2 font-semibold">Fasa & Surah</th>
                                     <th class="pb-2 font-semibold text-center">Mata</th>
                                     <th class="pb-2 font-semibold text-right">Tarikh</th>
                                 </tr>
                             </thead>
                             <tbody id="report-body" class="text-xs text-slate-700 font-medium divide-y divide-slate-50">
-                                <!-- Data dimasukkan secara dinamik -->
+                                <!-- Data ditarik dari Sheets -->
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Footer Butang Modal -->
                 <div class="p-4 bg-slate-50 border-t border-slate-100 grid grid-cols-2 gap-3 no-print">
                     <button onclick="cetakLaporan()" 
-                        class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-100 transition-all cursor-pointer">
+                        class="bg-[#028261] hover:bg-[#01684d] text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer">
                         <i class="fa-solid fa-print"></i>
-                        <span>Cetak / Save PDF</span>
+                        <span>Cetak / PDF</span>
                     </button>
                     <button onclick="tutupLaporan()" 
-                        class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all cursor-pointer">
+                        class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-all cursor-pointer">
                         <span>Tutup</span>
                     </button>
                 </div>
-
             </div>
         </div>
 
     </div>
 
-    <!-- JAVASCRIPT SISTEM -->
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbz_n9ixypCahYEWko31IeY5oaqyQeFkjyDYHPIqMyYUIi9j-MmhD9Rt56acu-L0b_g_Sg/exec";
-
+        // PASTIKAN ANDA MENGGANTIKAN URL DI BAWAH DENGAN URL DEPLOY TERBARU ANDA
+        const API_URL = "https://script.google.com/macros/s/AKfycbw754y_L1P5RvwFUJ5waYFSRc0UbmLKEASoPIbdGRI59x1HvKQbKlZ_nsHzTVQFNQptYg/exec";
         let pelajarSemasa = null;
-        let surahDipilih = "-";
-        let juzukDipilih = "-";
-        let mataSemasa = 10; // Default untuk Talaqqi
 
-        // DATA PEMETAAN MUKA SURAT AL-QURAN
-        const quranPages = [
-            { pageStart: 1, pageEnd: 1, surah: "1. Al-Fatihah", juz: 1 },
-            { pageStart: 2, pageEnd: 49, surah: "2. Al-Baqarah", juz: 1 },
-            { pageStart: 50, pageEnd: 76, surah: "3. Ali 'Imran", juz: 3 },
-            { pageStart: 77, pageEnd: 106, surah: "4. An-Nisa'", juz: 4 },
-            { pageStart: 107, pageEnd: 127, surah: "5. Al-Ma'idah", juz: 6 },
-            { pageStart: 128, pageEnd: 150, surah: "6. Al-An'am", juz: 7 },
-            { pageStart: 151, pageEnd: 176, surah: "7. Al-A'raf", juz: 8 },
-            { pageStart: 177, pageEnd: 186, surah: "8. Al-Anfal", juz: 9 },
-            { pageStart: 187, pageEnd: 207, surah: "9. At-Tawbah", juz: 10 },
-            { pageStart: 208, pageEnd: 221, surah: "10. Yunus", juz: 11 },
-            { pageStart: 222, pageEnd: 235, surah: "11. Hud", juz: 11 },
-            { pageStart: 236, pageEnd: 248, surah: "12. Yusuf", juz: 12 },
-            { pageStart: 249, pageEnd: 255, surah: "13. Ar-Ra'd", juz: 13 },
-            { pageStart: 256, pageEnd: 261, surah: "14. Ibrahim", juz: 13 },
-            { pageStart: 262, pageEnd: 267, surah: "15. Al-Hijr", juz: 14 },
-            { pageStart: 268, pageEnd: 281, surah: "16. An-Nahl", juz: 14 },
-            { pageStart: 282, pageEnd: 293, surah: "17. Al-Isra'", juz: 15 },
-            { pageStart: 294, pageEnd: 304, surah: "18. Al-Kahf", juz: 15 },
-            { pageStart: 305, pageEnd: 311, surah: "19. Maryam", juz: 16 },
-            { pageStart: 312, pageEnd: 321, surah: "20. Taha", juz: 16 },
-            { pageStart: 322, pageEnd: 331, surah: "21. Al-Anbiya'", juz: 17 },
-            { pageStart: 332, pageEnd: 341, surah: "22. Al-Hajj", juz: 17 },
-            { pageStart: 342, pageEnd: 351, surah: "23. Al-Mu'minun", juz: 18 },
-            { pageStart: 352, pageEnd: 366, sur化: "24. An-Nur", juz: 18 },
-            { pageStart: 367, pageEnd: 376, surah: "25. Al-Furqan", juz: 19 },
-            { pageStart: 377, pageEnd: 395, surah: "26. Asy-Syu'ara'", juz: 19 },
-            { pageStart: 396, pageEnd: 403, surah: "27. An-Naml", juz: 20 },
-            { pageStart: 404, pageEnd: 417, surah: "28. Al-Qasas", juz: 20 },
-            { pageStart: 418, pageEnd: 427, surah: "29. Al-'Ankabut", juz: 20 },
-            { pageStart: 428, pageEnd: 433, surah: "30. Ar-Rum", juz: 21 },
-            { pageStart: 434, pageEnd: 438, surah: "31. Luqman", juz: 21 },
-            { pageStart: 439, pageEnd: 444, surah: "32. As-Sajdah", juz: 21 },
-            { pageStart: 445, pageEnd: 452, surah: "33. Al-Ahzab", juz: 21 },
-            { pageStart: 453, pageEnd: 457, surah: "34. Saba'", juz: 22 },
-            { pageStart: 458, pageEnd: 466, surah: "35. Fatir", juz: 22 },
-            { pageStart: 467, pageEnd: 476, surah: "36. Yasin", juz: 22 },
-            { pageStart: 477, pageEnd: 482, surah: "37. As-Saffat", juz: 23 },
-            { pageStart: 483, pageEnd: 488, surah: "38. Sad", juz: 23 },
-            { pageStart: 489, pageEnd: 498, surah: "39. Az-Zumar", juz: 23 },
-            { pageStart: 499, pageEnd: 506, surah: "40. Ghafir", juz: 24 },
-            { pageStart: 507, pageEnd: 514, surah: "41. Fussilat", juz: 24 },
-            { pageStart: 515, pageEnd: 520, surah: "42. Asy-Syura", juz: 25 },
-            { pageStart: 521, pageEnd: 525, surah: "43. Az-Zukhruf", juz: 25 },
-            { pageStart: 526, pageEnd: 527, surah: "44. Ad-Dukhan", juz: 25 },
-            { pageStart: 528, pageEnd: 530, surah: "45. Al-Jathiyah", juz: 25 },
-            { pageStart: 531, pageEnd: 533, surah: "46. Al-Ahqaf", juz: 26 },
-            { pageStart: 534, pageEnd: 536, surah: "47. Muhammad", juz: 26 },
-            { pageStart: 537, pageEnd: 540, surah: "48. Al-Fath", juz: 26 },
-            { pageStart: 541, pageEnd: 544, surah: "49. Al-Hujurat", juz: 26 },
-            { pageStart: 545, pageEnd: 548, surah: "50. Qaf", juz: 26 },
-            { pageStart: 549, pageEnd: 551, surah: "51. Adh-Dhariyat", juz: 26 },
-            { pageStart: 552, pageEnd: 553, surah: "52. At-Tur", juz: 27 },
-            { pageStart: 554, pageEnd: 555, surah: "53. An-Najm", juz: 27 },
-            { pageStart: 556, pageEnd: 557, surah: "54. Al-Qamar", juz: 27 },
-            { pageStart: 558, pageEnd: 561, surah: "55. Ar-Rahman", juz: 27 },
-            { pageStart: 562, pageEnd: 563, surah: "56. Al-Waqi'ah", juz: 27 },
-            { pageStart: 564, pageEnd: 567, surah: "57. Al-Hadid", juz: 27 },
-            { pageStart: 568, pageEnd: 571, surah: "58. Al-Mujadilah", juz: 28 },
-            { pageStart: 572, pageEnd: 574, surah: "59. Al-Hasyr", juz: 28 },
-            { pageStart: 575, pageEnd: 576, surah: "60. Al-Mumtahanah", juz: 28 },
-            { pageStart: 577, pageEnd: 577, surah: "61. As-Saff", juz: 28 },
-            { pageStart: 578, pageEnd: 578, surah: "62. Al-Jumu'ah", juz: 28 },
-            { pageStart: 579, pageEnd: 579, surah: "63. Al-Munafiqun", juz: 28 },
-            { pageStart: 580, pageEnd: 580, surah: "64. At-Taghabun", juz: 28 },
-            { pageStart: 581, pageEnd: 581, surah: "65. At-Talaq", juz: 28 },
-            { pageStart: 582, pageEnd: 582, surah: "66. At-Tahrim", juz: 28 },
-            { pageStart: 583, pageEnd: 585, surah: "67. Al-Mulk", juz: 29 },
-            { pageStart: 586, pageEnd: 587, surah: "68. Al-Qalam", juz: 29 },
-            { pageStart: 588, pageEnd: 589, surah: "69. Al-Haqqah", juz: 29 },
-            { pageStart: 590, pageEnd: 590, surah: "70. Al-Ma'arij", juz: 29 },
-            { pageStart: 591, pageEnd: 591, surah: "71. Nuh", juz: 29 },
-            { pageStart: 592, pageEnd: 593, surah: "72. Al-Jinn", juz: 29 },
-            { pageStart: 594, pageEnd: 594, surah: "73. Al-Muzzammil", juz: 29 },
-            { pageStart: 595, pageEnd: 595, surah: "74. Al-Muddaththir", juz: 29 },
-            { pageStart: 596, pageEnd: 596, surah: "75. Al-Qiyamah", juz: 29 },
-            { pageStart: 597, pageEnd: 597, surah: "76. Al-Insan", juz: 29 },
-            { pageStart: 598, pageEnd: 598, surah: "77. Al-Mursalat", juz: 29 },
-            { pageStart: 599, pageEnd: 604, surah: "78-114. Juz Amma", juz: 30 }
-        ];
-
-        // AUTO-KIRA JUZUK & SURAH BERDASARKAN MUKA SURAT
-        function kiraSurahDanJuzuk() {
-            const pageInput = document.getElementById("input-page").value;
-            const pageNum = parseInt(pageInput);
-
-            if (!pageInput || isNaN(pageNum) || pageNum < 1 || pageNum > 604) {
-                document.getElementById("output-surah").textContent = "-";
-                document.getElementById("output-juzuk").textContent = "-";
-                surahDipilih = "-";
-                juzukDipilih = "-";
-                return;
-            }
-
-            let juzukKira = Math.ceil((pageNum - 2) / 20) + 1;
-            if (pageNum <= 2) juzukKira = 1;
-            if (pageNum >= 582) juzukKira = 30;
-
-            let surahKira = "Surah Tidak Diketahui";
-            for (let item of quranPages) {
-                if (pageNum >= item.pageStart && pageNum <= item.pageEnd) {
-                    surahKira = item.surah;
-                    break;
-                }
-            }
-
-            if (pageNum >= 2 && pageNum <= 21) juzukKira = 1;
-            else if (pageNum >= 22 && pageNum <= 41) juzukKira = 2;
-            else if (pageNum >= 42 && pageNum <= 49) juzukKira = 3;
-
-            surahDipilih = surahKira;
-            juzukDipilih = juzukKira;
-
-            document.getElementById("output-surah").textContent = surahDipilih;
-            document.getElementById("output-juzuk").textContent = "Juzuk " + juzukDipilih;
-        }
-
-        // KEMASKINI NILAI MATA MENGIKUT SELEKSI FASA
-        function kemaskiniPaparanMata() {
-            const fasa = document.getElementById("input-fasa").value;
-            if (fasa === "FASA TALAQQI") mataSemasa = 10;
-            else if (fasa === "FASA HAFAZAN") mataSemasa = 20;
-            else if (fasa === "FASA MURAJAAH") mataSemasa = 15;
-        }
-
-        // 1. FUNGSI LOG MASUK
         async function prosesLogin() {
             const inputId = document.getElementById("input-id").value.trim();
             const errorDiv = document.getElementById("login-error");
@@ -359,11 +211,11 @@
                     document.getElementById("login-screen").classList.add("hidden");
                     document.getElementById("main-screen").classList.remove("hidden");
                 } else {
-                    paparRalatLogin(data.message || "ID tidak dijumpai.");
+                    paparRalatLogin(data.message || "ID tidak dijumpai!");
                 }
             } catch (err) {
                 console.error(err);
-                paparRalatLogin("Ralat sambungan rangkaian atau URL API salah.");
+                paparRalatLogin("Ralat sambungan rangkaian internet.");
             } finally {
                 btnLogin.disabled = false;
                 btnLogin.innerHTML = `<span>Log Masuk</span><i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>`;
@@ -376,25 +228,20 @@
             errorDiv.classList.remove("hidden");
         }
 
-        // 2. FUNGSI HANTAR REKOD DINAMIK (SEKALI UNTUK SEMUA FASA)
-        async function hantarRekodHafazan() {
+        async function hantarFasa(namaFasa, nilaiMata) {
             if (!pelajarSemasa) return;
 
-            const fasaDipilih = document.getElementById("input-fasa").value;
-            const pageInput = document.getElementById("input-page").value.trim();
-            
-            if (!pageInput || surahDipilih === "-" || juzukDipilih === "-") {
-                alert("Sila masukkan nombor muka surat (1-604) yang sah.");
-                return;
-            }
+            if (!confirm(`Sahkan penghantaran untuk ${namaFasa}?`)) return;
 
-            kemaskiniPaparanMata(); // Pastikan mata selaras
+            let targetBtnId = "";
+            let originalText = "";
+            if (namaFasa === "FASA TALAQQI") { targetBtnId = "btn-talaqqi"; originalText = "Selesai Talaqqi (+10 Mata)"; }
+            else if (namaFasa === "FASA HAFAZAN") { targetBtnId = "btn-hafazan"; originalText = "Selesai Hafazan Baharu (+20 Mata)"; }
+            else if (namaFasa === "FASA MURAJAAH") { targetBtnId = "btn-murajaah"; originalText = "Selesai Murajaah / Semakan (+15 Mata)"; }
 
-            if (!confirm(`Sahkan rekod:\nFasa: ${fasaDipilih}\nMuka Surat: ${pageInput}\nSurah: ${surahDipilih}\nMata: +${mataSemasa}`)) return;
-
-            const btnSubmit = document.getElementById("btn-submit-rekod");
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = `<div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>`;
+            const btnTarget = document.getElementById(targetBtnId);
+            btnTarget.disabled = true;
+            btnTarget.innerHTML = `<div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>`;
 
             try {
                 const response = await fetch(API_URL, {
@@ -403,37 +250,34 @@
                         action: "add_log",
                         id: pelajarSemasa.id,
                         nama: pelajarSemasa.nama,
-                        mata: mataSemasa,
-                        juzuk: juzukDipilih,       
-                        surah: surahDipilih,  
-                        mukaSurat: pageInput,   
-                        fasa: fasaDipilih
+                        fasa: namaFasa,
+                        juzuk: "Umum",       // Boleh ditukar jika perlu input spesifik
+                        surah: "Umum",       // Dihantar sebagai string agar dikesan oleh Sheets
+                        mukaSurat: "Umum",   
+                        mata: nilaiMata
                     })
                 });
                 const data = await response.json();
 
                 if (data.result === "success") {
-                    alert("Alhamdulillah! Rekod berjaya dihantar.");
-                    document.getElementById("input-page").value = "";
-                    kiraSurahDanJuzuk();
+                    alert(`Rekod ${namaFasa} berjaya disimpan!`);
                 } else {
-                    alert("Gagal: " + data.message);
+                    alert("Gagal disimpan: " + data.message);
                 }
             } catch (err) {
                 console.error(err);
-                alert("Ralat sambungan. Sila periksa rangkaian internet anda.");
+                alert("Ralat fail sambungan. Sila cuba lagi.");
             } finally {
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = `<i class="fa-solid fa-paper-plane text-xs"></i> <span>Hantar Rekod Tugasan</span>`;
+                btnTarget.disabled = false;
+                btnTarget.innerHTML = `<span>${originalText}</span>`;
             }
         }
 
-        // 3. FUNGSI LAPORAN INDIVIDU
         async function bukaLaporan() {
             if (!pelajarSemasa) return;
 
             document.getElementById("report-modal").classList.remove("hidden");
-            document.getElementById("report-title").textContent = "Laporan Rekod Hafazan: " + pelajarSemasa.nama;
+            document.getElementById("report-title").textContent = "Laporan Rekod: " + pelajarSemasa.nama;
             document.getElementById("loading-report").classList.remove("hidden");
             
             const tbody = document.getElementById("report-body");
@@ -450,51 +294,37 @@
 
                 if (data.result === "success" && data.logs && data.logs.length > 0) {
                     data.logs.forEach(log => {
-                        let surahPenuh = String(log.surah || "Tiada Nama");
-                        let namaSurah = surahPenuh.includes(". ") ? surahPenuh.split(". ")[1] : surahPenuh;
-                        
                         let tarikhPenuh = String(log.tarikh || "");
-                        let tarikhPintas = tarikhPenuh.includes(" ") ? tarikhPenuh.split(" ")[0] : tarikhPenuh;
-                        if (!tarikhPintas) tarikhPintas = "-";
+                        let tarikhPintas = tarikhPenuh.includes("T") ? tarikhPenuh.split("T")[0] : tarikhPenuh.split(" ")[0];
 
                         let tr = document.createElement("tr");
                         tr.className = "hover:bg-slate-50 transition-colors";
                         tr.innerHTML = `
                             <td class="py-3 pr-2">
-                                <span class="font-bold text-slate-900 block">${namaSurah}</span>
-                                <span class="text-[10px] text-slate-400 font-medium block mt-0.5">MS ${log.mukaSurat || "-"} (Juz ${log.juzuk || "-"})</span>
+                                <span class="font-bold text-slate-900 block text-xs uppercase">${log.fasa || "-"}</span>
+                                <span class="text-[10px] text-slate-400 block mt-0.5">Surah: ${log.surah || "-"} | Jz: ${log.juzuk || "-"}</span>
                             </td>
-                            <td class="py-3 text-slate-500 font-medium text-[11px]">${log.fasa || "-"}</td>
-                            <td class="py-3 text-center text-emerald-600 font-bold">+${log.mata || 0}</td>
-                            <td class="py-3 text-right text-slate-400 font-medium text-[11px]">${tarikhPintas}</td>
+                            <td class="py-3 text-center text-emerald-600 font-bold text-xs">+${log.mata || 0}</td>
+                            <td class="py-3 text-right text-slate-400 font-medium text-[10px]">${tarikhPintas || "-"}</td>
                         `;
                         tbody.appendChild(tr);
                     });
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-slate-400 font-medium">Belum ada sejarah log hafazan ditemui.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="3" class="text-center py-8 text-slate-400 font-medium">Belum ada sebarang rekod log.</td></tr>`;
                 }
             } catch (err) {
                 console.error(err);
                 document.getElementById("loading-report").classList.add("hidden");
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-red-500 font-semibold">Gagal mengambil data log. Sebarang masalah sila semak fail Sheets anda.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="3" class="text-center py-8 text-red-500 font-semibold">Gagal mengambil data log.</td></tr>`;
             }
         }
 
-        function tutupLaporan() {
-            document.getElementById("report-modal").classList.add("hidden");
-        }
+        function tutupLaporan() { document.getElementById("report-modal").classList.add("hidden"); }
+        function cetakLaporan() { window.print(); }
 
-        function cetakLaporan() {
-            window.print();
-        }
-
-        // 4. FUNGSI LOG KELUAR
         function prosesLogKeluar() {
             pelajarSemasa = null;
             document.getElementById("input-id").value = "";
-            document.getElementById("input-page").value = "";
-            document.getElementById("input-fasa").selectedIndex = 0;
-            kiraSurahDanJuzuk();
             document.getElementById("main-screen").classList.add("hidden");
             document.getElementById("login-screen").classList.remove("hidden");
         }
